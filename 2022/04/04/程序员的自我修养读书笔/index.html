@@ -1,0 +1,773 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Dominic">
+  <meta name="keywords" content="">
+  
+  <title>程序员的自我修养笔记 - 如云泊</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":": )","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":"6d6218480fd6147a7bc43664e2689169","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>如云泊</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/banner_post01.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="程序员的自我修养笔记">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-04 11:12" pubdate>
+        2022年4月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      42
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">程序员的自我修养笔记</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：4 分钟前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="静态链接"><a href="#静态链接" class="headerlink" title="静态链接"></a>静态链接</h2><p>库是一组目标文件的包，就是一些常用的代码编译成目标文件后打包存放。</p>
+<h2 id="第三章-目标文件里有什么"><a href="#第三章-目标文件里有什么" class="headerlink" title="第三章 目标文件里有什么"></a>第三章 目标文件里有什么</h2><h3 id="3-1-目标文件的格式"><a href="#3-1-目标文件的格式" class="headerlink" title="3.1 目标文件的格式"></a>3.1 目标文件的格式</h3><p><strong>目标文件</strong>从结构上讲，它是已经编译后的可执行文件格式，只是还没有经过链接的过程，其中可能有些符号或者有些地址还没有被调整。</p>
+<p>现在PC平台流形的可执行文件格式，主要是windows下的PE（Portable Executable）和Linux下的ELF（Executable Linkable Format）,它们都是COFF（Common file format）格式的变种。</p>
+<p>指令和数据分开存放的好处：</p>
+<ul>
+<li><p>一方面当程序被装载后，数据和指令分别被映射到两个虚存区域。由于数据区域对于进程来说是可读写的，而指令区域对于进程来说是只读的，所以这两个虚存区域的权限可以被设置成可读写和只读，这样可以防止程序的指令被有意或无意地改写。</p>
+</li>
+<li><p>另一方面是现代CPU有强大的缓存体系，由于缓存很重要，所以程序必须尽量提高缓存命中率。指令区和数据区分离有利于提高程序的局部性。现代CPU的缓存一般都被设计成数据缓存和指令缓存，所以程序的指令和数据分开存放对于CPU的缓存命中率提高有好处。</p>
+</li>
+<li><p>第三个原因，也是最重要的原因，就是当系统中运行着多个该进程副本时，他们的指令都是一样的，所以内存中只需要保存一份程序的指令部分。</p>
+</li>
+</ul>
+<p><strong>真正了牛逼的程序员对自己的程序每一个字节都了如指掌。</strong></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">objdump -h  <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SimpleSsection</span>.</span></span>o  # 打印elf文件各个段的信息<br>size <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SimpleSsection</span>.</span></span>o           # 查看elf文件各个段的长度<br>objdump -s -d <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SimpleSsection</span>.</span></span>o # -s将所有段内容以十六进制打印，-d将所有包含指令的段反汇编<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>段名称</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.data</td>
+<td>- 初始化的全局变量 <br> - 局部静态变量</td>
+</tr>
+<tr>
+<td>.rodata</td>
+<td>只读数据段，对这个段的任何修改都是非法的，保证了程序的安全性。 <br> 有时候编译器会把字符串放到data段<br> - 只读变量 const 修饰 <br> - 字符串常量</td>
+</tr>
+<tr>
+<td>.bss</td>
+<td>不占磁盘空间， <br>- 未初始化的全局变量 <br> - 未初始化的局部静态变量 <br> - 初始化为0的静态变量</td>
+</tr>
+<tr>
+<td>.comment</td>
+<td>存放编译器版本信息，比如字符串“GCC：（GNU）4.2.0”</td>
+</tr>
+<tr>
+<td>.line</td>
+<td>调试时的行号表，即源代码行号与编译后指令的对应表</td>
+</tr>
+<tr>
+<td>.note</td>
+<td>额外的编译器信息，如程序公司名，版本号</td>
+</tr>
+<tr>
+<td>.symtab</td>
+<td>Symbol Table符号表</td>
+</tr>
+<tr>
+<td>.plt</td>
+<td>动态链接的跳转表</td>
+</tr>
+<tr>
+<td>.got</td>
+<td>动态链接的全局入口表</td>
+</tr>
+</tbody></table>
+<p>段名称都是<code>.</code>前缀，表示这些表名字是系统保留的，应用程序也可以使用一些非系统保留的名字作为段名称。比如可以加入一个<code>music</code>段，里面存一首mp3音乐，运行起来后就会播放音乐，打算自定义段不能使用<code>.</code>作为前缀，以免与系统保留段名冲突。</p>
+<blockquote>
+<p>Q: 如何将一个二进制文件，如图片，MP3文件作为目标文件的一个段？<br>A: 可以使用objcopy工具，比如有一个图片 image..jpg，大小为0x2100字节：<br>$ objcopy -I binary -O elf32-i388 -B  i38 image.jpg image.o</p>
+</blockquote>
+<p>正常情况下编译出来的目标文件，代码会放到<code>.text</code>段，但是有时候你希望变量或者某些代码能放到你指定的段中去，以实现某些特定的功能。比如为了满足某些硬件的内存和IO地址布局。GCC提供了扩展机制，使得程序员可以指定变量所处的段：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lisp">__attribute__((<span class="hljs-name">section</span>(<span class="hljs-string">&quot;FOO&quot;</span>))) int global = <span class="hljs-number">42</span><span class="hljs-comment">;</span><br>__attribute__((<span class="hljs-name">section</span>(<span class="hljs-string">&quot;BAR&quot;</span>))) void foo<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-4-ELF-文件结构"><a href="#3-4-ELF-文件结构" class="headerlink" title="3.4 ELF 文件结构"></a>3.4 ELF 文件结构</h3><p>使用<code>readelf</code>命令查看elf文件详细信息。</p>
+<ul>
+<li><p>ELF 魔数，确认文件类型。</p>
+</li>
+<li><p>文件类型</p>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ET_REL</td>
+<td>1</td>
+<td>可重定位文件，一般问.o文件</td>
+</tr>
+<tr>
+<td>ET_EXEC</td>
+<td>2</td>
+<td>可执行文件</td>
+</tr>
+<tr>
+<td>ET_DYN</td>
+<td>3</td>
+<td>共享目标文件，一般为.so文件</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>机器类型</p>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EM_M32</td>
+<td>1</td>
+<td>AT&amp;T WE 32100</td>
+</tr>
+<tr>
+<td>EM_SPARC</td>
+<td>2</td>
+<td>SPARC</td>
+</tr>
+<tr>
+<td>EM_M386</td>
+<td>3</td>
+<td>Intel x86</td>
+</tr>
+<tr>
+<td>EM_68K</td>
+<td>4</td>
+<td>Motorola 68000</td>
+</tr>
+<tr>
+<td>EM_88K</td>
+<td>5</td>
+<td>Motorola 88000</td>
+</tr>
+<tr>
+<td>EM_860</td>
+<td>6</td>
+<td>Intel 80860</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p><strong>段表</strong>是保存各个段的基本属性的结构。段表是除文件头外最重要的结构。编译器，链接器和装载器都是依靠段表来定位和访问各个段的属性。</p>
+<h3 id="3-5-链接的接口-符号"><a href="#3-5-链接的接口-符号" class="headerlink" title="3.5 链接的接口-符号"></a>3.5 链接的接口-符号</h3><h4 id="符号表结构"><a href="#符号表结构" class="headerlink" title="符号表结构"></a>符号表结构</h4><p>链接过程的本质就是要把多个不同的目标文件之间相互粘到一起。</p>
+<p>目标文件B要用到目标文件A的函数<code>foo</code>，我们称目标文件A<strong>定义</strong>了函数<code>foo</code>，目标文件B<strong>引用</strong>了目标文件A的函数<code>foo</code>。</p>
+<p>链接中，我们将函数和变量统称为<strong>符号</strong>，函数名或变量名就是符号名。、</p>
+<p>每一个目标文件都会有一个相应的符号表，表里记录了目标文件中所用到的所有符号。每个符号都有一个对应值，叫符号值，对于变量和函数来说，符号值就是他们的地址。</p>
+<p>符号类型：</p>
+<ul>
+<li>定义在本目标文件的全局符号，可以被其他目标引用。</li>
+<li>在本目标文件中应用的全局符号，却没有定义在本目标文件。</li>
+<li>段名称，也就是段起始地址。</li>
+<li>局部符号，一些静态变量等。</li>
+<li>行号信息。</li>
+</ul>
+<p>最重要的就是第一类和第二类。链接只关心全局符号的相互粘合，其他都是次要的。</p>
+<p>可以使用 <code>readelf</code> <code>objdump</code> <code>nm</code>等命令查看符号信息。</p>
+<h4 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h4><p>一些特殊符号，没有在程序中定义，但是可以直接声明并引用它：</p>
+<ul>
+<li><code>__executable_start</code>，程序起始地址，不是入口地址，是程序最开始的地址。</li>
+<li><code>__etext</code> <code>__etext</code>  <code>etext</code> 代码段结束地址，代码段最末尾的地址。</li>
+<li><code>_edata</code> <code>edata</code> 数据段结束地址，数据段最末尾地址。</li>
+<li><code>__end</code>  <code>end</code> 程序结束地址。</li>
+</ul>
+<h4 id="符号修饰"><a href="#符号修饰" class="headerlink" title="符号修饰"></a>符号修饰</h4><p>符号应与对应的函数或者变量同名，但是在C语言发明时，已经存在了很多库和目标文件，如果再用一样的函数或变量就会冲突为了避免冲突，C语言编译后符号名前会加上下划线<code>_</code>，如<code>foo</code>变成<code>_foo</code>，Fortran语言编译后会在符号前后加上下划线<code>_foo_</code>。</p>
+<p>C++具有类，继承，重载等复杂机制，为了支持这些复杂特性，人们发明了<strong>符号修饰</strong>和<strong>符号改编</strong>。</p>
+<p><strong>函数签名</strong>包含了一个函数的信息，包括函数名，参数类型，所在类和名称空间等信息。它用于识别不同的函数。在编译器和链接器处理符号时，使用某种名称修饰的方法，是的每个函数签名对应一个<strong>修饰后名称</strong>。</p>
+<p>由于不同的编译器采用不同的名字修饰方式，必然导致由不同编译器编译产生的目标文件无法正常互相链接，这是导致不同编译器之间不能互操作的主要原因之一。</p>
+<h4 id="extern-C"><a href="#extern-C" class="headerlink" title="extern C"></a>extern C</h4><p>C++为了兼容C，C++编译器会将在<code>extern C</code> 的大括号内部的代码当做C语言代码处理，这样就不会使用C++的名称修饰机制。（也就不会在编译的时候加上下划线）</p>
+<p>但是C语言并不支持<code>extern C</code>关键字，又不能为同一个库函数写两套头文件，这时候就可以用C++的宏，<code>__cplusplus</code>。C++编译器会在编译C++的程序时默认定义这个宏，我们可以用条件宏来判断当前编译单元是不是C++代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span><br><span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">memset</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *, <span class="hljs-keyword">int</span> , <span class="hljs-keyword">size_t</span>)</span></span>;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> __cplusplus</span><br>&#125;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<h4 id="弱符号与强符号"><a href="#弱符号与强符号" class="headerlink" title="弱符号与强符号"></a>弱符号与强符号</h4><p>我们经常碰到符号重定义，多个目标文件中含有相同名字全局符号的定义，那么这些目标文件链接的时候就会出现符号重定义的错误。比如在两个文件中定义了相同的全局变量。</p>
+<p>对于C/C++来说，编译器默认函数和初始化了的全局变量为强符号，未初始化的全局变量为弱符号。</p>
+<p>也可以使用GCC的<code>__attribute__((weak))</code>来定义任何一个强符号为弱符号。</p>
+<ul>
+<li>不允许强符号被多次定义，如果多次定义，则链接器报重复定义错误；</li>
+<li>如果一个符号在某文件中是强符号，在其他文件中都是弱符号，那么选择强符号。</li>
+<li>如果一个符号在所有目标文件中都是弱符号，那么选择其中占用空间最大的一个。</li>
+</ul>
+<h2 id="第四章-静态链接"><a href="#第四章-静态链接" class="headerlink" title="第四章 静态链接"></a>第四章 静态链接</h2><h3 id="空间地址分配"><a href="#空间地址分配" class="headerlink" title="空间地址分配"></a>空间地址分配</h3><p>可执行文件中的代码段和数据段就是多个文件合并而来的，对于多个文件链接器如何将它们合并到输出文件？</p>
+<p>按序叠加：最简单的方式，按照输入文件顺序依次合并。这会导致大量碎片，比如x86的硬件，段的装载地址和空间的对齐单位是页，也就是4096字节，那么如果一个段的长度只有1字节，它在内存里也要占用4096字节。</p>
+<p>相似段合并：将所有相同性质的段合并在一起。</p>
+<p>现在的链接器基本上采用第二种。使用这种方法的链接器都采用一种叫两步链接的方法。</p>
+<p>第一步，空间与地址分配。扫描所有的输入目标文件，并且获得各个段的长度，属性和位置，并将输入目标文件中的符号表所有的符号定义和符号引用收集起来，统一放到一个全局符号表。这一步，链接器将能够获得所有输入目标文件的段长度，并且将他们合并，计算出输出文件中各个段合并后的长度和位置，并建立映射关系。</p>
+<p>第二部，符号解析与重定位。使用上面收集到的信息，读取输入文件中段的数据，重定位信息。并且进行符号解析与重定位，调整代码中的地址。</p>
+<p>VMA （Virtual Memory Address）虚拟地址，LMA（Load Memory Address）加载地址。正常情况这两个值是一样的。</p>
+<p>链接之前目标文件的所有短VMA都是0，因为虚拟空间还没有被分配，默认为0，链接之后各个段就会被分配相应的虚拟地址。</p>
+<p>Linux下，ELF可执行文件默认从地址<code>0x8048000</code>开始分配。</p>
+<h3 id="符号解析与重定位"><a href="#符号解析与重定位" class="headerlink" title="符号解析与重定位"></a>符号解析与重定位</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">objdump</span> -d  查看代码段反汇编结果<br></code></pre></td></tr></table></figure>
+
+<p>源代码在编译成目标文件时并不知道函数的调用地址。需要通过链接时重定位。</p>
+<p>链接器如何知道哪些指令需要被调整？这就用到了<strong>重定位表</strong>。</p>
+<p>重定位表就是ELF文件的一个段，所以其实重定位表也可以叫重定位段。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">objdump</span> -r 查看重定位表<br></code></pre></td></tr></table></figure>
+
+<p>每个要被重定位的地方叫一个重定位入口（Relocation Entry）。</p>
+<p>重定位过程也伴随着符号的解析过程，每个目标文件都可能定义一些符号，或引用到定义在其他文件的符号。重定位过程中，每个重定位的入口都是对一个符号的引用，那么当链接器需要对某个符号的引用进行重定位时，他就要确定这个符号的目标地址。这时候链接器就会取查找由所有输入目标文件的符号表组成的全局符号表，找到对应的符号进行重定位。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">readelf</span> -s 查看符号表<br></code></pre></td></tr></table></figure>
+
+<p>对于32位x86平台下的ELF文件的重定位入口所修正的指令寻址方式只有两种：</p>
+<ul>
+<li>绝对近址32位寻址</li>
+<li>相对近址32位寻址</li>
+</ul>
+<p>x86基本重定位类型</p>
+<table>
+<thead>
+<tr>
+<th>宏定义</th>
+<th>值</th>
+<th>重定位修正方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R_386_32</td>
+<td>1</td>
+<td>绝对寻址修正 S+A</td>
+</tr>
+<tr>
+<td>R_386_PC32</td>
+<td>2</td>
+<td>相对寻址修正 S+A-P</td>
+</tr>
+</tbody></table>
+<p>A = 保存在被修正位置的值<br>P = 被修正的位置(相对于段开始的偏移量或者虚拟地址)，注意，该值可通过r_offset计算得到<br>S = 符号的实际地址，即由 <code>r_info</code>的高24位指定的符号的实际地址</p>
+<h2 id="第6章-可执行文件的装载与进程"><a href="#第6章-可执行文件的装载与进程" class="headerlink" title="第6章 可执行文件的装载与进程"></a>第6章 可执行文件的装载与进程</h2><p>程序运行时是有局部性原理的，所以我们可以将程序最常用的部分驻留在内存中，将不常用的数据存放在磁盘里，这就是动态载入的基本原理。</p>
+<h3 id="COMMON块"><a href="#COMMON块" class="headerlink" title="COMMON块"></a>COMMON块</h3><blockquote>
+<p>Q:在目标文件中，编译器为什么不直接把未初始化的全局变量也当做未初始化的局部静态变量一样处理，为它在BSS段分配空间，而是将其标记为一个COMMON类型的变量？<br>A:当编译器将一个编译单元编译成目标文件时，如果该编译单元包含了弱符号（未初始化的全局变量就是典型），那么该弱符号最终所占大小未知，因为有可能其他编译单元中该符号所占空间比当前的大所以编译器此时无法为该符号在BSS段分配空间。但链接器在链接过程中可以确定弱符号大小，因为当链接器读取所有输入目标文件后，任何一个弱符号大小都可以确定，所以它可以在最终输出文件的BSS段为其分配空间。总体来看，未初始化全局变量最终还是被放在BSS段。</p>
+</blockquote>
+<p>GCC的<code>-fno-common</code>吧所有未初始化的全局变量不以COMMON块形式处理。</p>
+<p><code>__attribute__</code>扩展也可以实现，<code>int global __attribute__((nocommon))</code>。这样未初始化的全局变量就是强符号。</p>
+<blockquote>
+<p>Q: 为什么静态运行库里面一个目标文件只包含一个函数？比如libc.o里面printf.o只包含printf()函数，strlen.o只有strlen函数？<br>A:因为链接器在链接静态库时是以目标文件为单位的，比如我们引用了静态库中的printf函数，那么链接器就会把库中包含printf函数的那个目标文件链接进来，如果很多函数写在一个目标文件中，就将没用到的函数一起链接进了输出结果中。</p>
+</blockquote>
+<h3 id="链接的过程控制"><a href="#链接的过程控制" class="headerlink" title="链接的过程控制"></a>链接的过程控制</h3><h2 id="第七章"><a href="#第七章" class="headerlink" title="第七章"></a>第七章</h2><p>动态链接模块的装载地址是从<code>0x00000000</code>开始的。</p>
+<p>共享对象的最终装载地址在编译时是不确定的。</p>
+<p>静态共享库： 将程序的各个模块交给操作系统管理，操作系统在某个特定的地址划分出一些地址块，为那些已知的模块预留足够的空间。</p>
+<p><strong>装载时重定位</strong>：程序在编译时被装载的目标地址为<code>0x1000</code>，但是在装载时操作系统发现<code>0x1000</code>这个地址已经被别的程序使用了，从<code>0x4000</code>开始有一块足够大的空间可以容纳，那么该程序就可以被装载至<code>0x4000</code>，程序指令和数据所有引用都只需要加上<code>0x3000</code>偏移量即可。因为他们在程序中的相对位置是不会改变的。</p>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kity@2.0.4/dist/kity.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/kityminder-core@1.4.50/dist/kityminder.core.min.js"></script><script defer="true" type="text/javascript" src="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/hexo-simple-mindmap@0.2.0/dist/mindmap.min.css">
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/28/%E3%80%90%E8%AF%91%E3%80%91%E4%BB%80%E4%B9%88%E6%97%B6Die-to-Die%E6%8E%A5%E5%8F%A3/">
+                        <span class="hidden-mobile">【译】什么时Die-to-Die接口</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#gitalk-container', function() {
+      Fluid.utils.createCssLink('/css/gitalk.css')
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js', function() {
+        var options = Object.assign(
+          {"clientID":"e510bad926f1c41a279f","clientSecret":"91ece699b2546ec2b3d5215e5ca55ee8634b9421","repo":"comment","owner":"Dunky-Z","admin":["Dunky-Z"],"language":"zh-CN","labels":["Gitalk"],"perPage":10,"pagerDirection":"last","distractionFreeMode":false,"createIssueManually":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"},
+          {
+            id: '26715a1bea07c323673244edd8ff9757'
+          }
+        )
+        var gitalk = new Gitalk(options);
+        gitalk.render('gitalk-container');
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <i class="iconfont icon-love"></i> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3.1.4/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?6d6218480fd6147a7bc43664e2689169";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
