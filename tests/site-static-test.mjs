@@ -39,3 +39,11 @@ test('generated blog surfaces only the static publishing contract', async () => 
   assert.deepEqual(blogEntries.sort(), ['index.html']);
   assert.doesNotMatch(`${blog}\n${rss}\n${sitemap}`, /blog-template|文章标题 \/ Post title/);
 });
+
+test('post layout keeps an archive return link in the reading flow', async () => {
+  const layout = await readFile(new URL('src/layouts/PostLayout.astro', root), 'utf8');
+
+  assert.match(layout, /href="\/blog\/"/);
+  assert.match(layout, /返回博客归档/);
+  assert.match(layout, /Back to archive/);
+});

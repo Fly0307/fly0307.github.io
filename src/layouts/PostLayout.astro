@@ -26,6 +26,10 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
   <article class="post shell" lang={postLanguage}>
     <header class="post__header">
       <p class="eyebrow">TRANSMISSION / {post.data.language.toUpperCase()}</p>
+      <a class="post__back-link" href="/blog/">
+        <span data-zh lang="zh-CN">← 返回博客归档</span>
+        <span data-en lang="en">← Back to archive</span>
+      </a>
       <h1>{post.data.title}</h1>
       <p class="post__description">{post.data.description}</p>
       <PostMeta
