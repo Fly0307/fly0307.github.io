@@ -10,4 +10,4 @@ featured: false
 
 # 开始写作
 
-将文件复制为不以下划线开头的名称，选择 `zh` 或 `en`，完成后把 `draft` 改为 `false`。
+将此文件复制为新的文章文件名，选择 `zh` 或 `en`，完成后把 `draft` 改为 `false`。

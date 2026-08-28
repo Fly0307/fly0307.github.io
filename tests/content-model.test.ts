@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { postSchema } from '../src/lib/post-schema.ts';
 import {
@@ -60,6 +61,17 @@ test('drafts are excluded and featured posts lead the homepage selection', () =>
   ];
   assert.deepEqual(getPublishedPosts(posts).map(({ id }) => id), ['newest', 'featured', 'older']);
   assert.deepEqual(selectHomepagePosts(posts, 3).map(({ id }) => id), ['featured', 'newest', 'older']);
+});
+
+test('the collected draft template remains absent from published selections', async () => {
+  const template = await readFile(new URL('../src/content/blog/blog-template.md', import.meta.url), 'utf8');
+  const config = await readFile(new URL('../src/content.config.ts', import.meta.url), 'utf8');
+  const draftTemplate = post('blog-template', '2026-08-28', false, true);
+
+  assert.match(template, /^draft:\s*true$/m);
+  assert.match(config, /pattern:\s*'\*\*\/\*\.md'/);
+  assert.deepEqual(getPublishedPosts([draftTemplate]), []);
+  assert.deepEqual(selectHomepagePosts([draftTemplate]), []);
 });
 
 test('tag and reading-time helpers are deterministic', () => {

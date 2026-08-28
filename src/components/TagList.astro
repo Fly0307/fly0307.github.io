@@ -9,7 +9,12 @@ const { tags } = Astro.props;
 ---
 
 {tags.length > 0 && (
-  <ul class="tag-list" aria-label="Tags">
+  <ul
+    class="tag-list"
+    aria-label="标签"
+    data-aria-label-zh="标签"
+    data-aria-label-en="Tags"
+  >
     {tags.map((tag) => <li data-tag-key={normalizeTag(tag)}>{tag}</li>)}
   </ul>
 )}

@@ -152,7 +152,7 @@ featured: true           # 默认 false
 - `featured: true` 优先进入首页最新日志；不足三篇时按发布日期补足，仍不展示草稿。
 - 标签保留作者输入的显示形式，同时生成稳定、URL 安全的筛选值。
 
-仓库提供一个不发布的 Markdown 模板，说明字段与写作步骤，但不提供虚构的公开文章。
+仓库提供 `src/content/blog/blog-template.md` 作为不发布的 Markdown 草稿模板；它会进入内容集合以保持集合稳定，但 `draft: true` 会使其被所有公开输出过滤，不提供虚构的公开文章。
 
 ## 中英双语规则
 

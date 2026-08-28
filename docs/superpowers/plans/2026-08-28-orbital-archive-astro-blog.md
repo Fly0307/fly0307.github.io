@@ -41,7 +41,7 @@
 │   └── robots.txt                      # Sitemap discovery and crawl policy
 ├── src/
 │   ├── content.config.ts               # Blog collection loader and schema
-│   ├── content/blog/_template.md       # Ignored, non-published authoring template
+│   ├── content/blog/blog-template.md   # Collected draft, non-published authoring template
 │   ├── data/site.ts                    # Confirmed bilingual identity/project data
 │   ├── layouts/
 │   │   ├── BaseLayout.astro            # Metadata, navigation, footer, language bootstrap
@@ -258,7 +258,7 @@ git commit -m "chore(site): 建立 Astro 静态构建基础"
 - Create: `src/lib/post-schema.ts`
 - Create: `src/content.config.ts`
 - Create: `src/lib/posts.ts`
-- Create: `src/content/blog/_template.md`
+- Create: `src/content/blog/blog-template.md`
 - Create: `tests/content-model.test.ts`
 
 **Interfaces:**
@@ -398,7 +398,7 @@ import { glob } from 'astro/loaders';
 import { postSchema } from './lib/post-schema';
 
 const blog = defineCollection({
-  loader: glob({ base: './src/content/blog', pattern: '**/[^_]*.md' }),
+  loader: glob({ base: './src/content/blog', pattern: '**/*.md' }),
   schema: postSchema,
 });
 
@@ -448,9 +448,9 @@ export function estimateReadingMinutes(body = ''): number {
 }
 ```
 
-- [ ] **Step 5: Add the ignored, non-published Markdown template**
+- [ ] **Step 5: Add the collected, non-published Markdown draft template**
 
-Create `src/content/blog/_template.md`:
+Create `src/content/blog/blog-template.md`:
 
 ```markdown
 ---
@@ -465,19 +465,19 @@ featured: false
 
 # 开始写作
 
-将文件复制为不以下划线开头的名称，选择 `zh` 或 `en`，完成后把 `draft` 改为 `false`。
+将此文件复制为新的文章文件名，选择 `zh` 或 `en`，完成后把 `draft` 改为 `false`。
 ```
 
 - [ ] **Step 6: Run focused and framework checks**
 
 Run: `npm run test:unit && npm run check`
 
-Expected: all four content-domain tests PASS; Astro reports no collection configuration errors; the template is ignored by the glob loader.
+Expected: all content-domain tests PASS; Astro reports no collection configuration errors; the template is collected as a draft and excluded from published selections.
 
 - [ ] **Step 7: Commit the content domain**
 
 ```bash
-git add src/content.config.ts src/content/blog/_template.md src/lib/post-schema.ts src/lib/posts.ts tests/content-model.test.ts
+git add src/content.config.ts src/content/blog/blog-template.md src/lib/post-schema.ts src/lib/posts.ts tests/content-model.test.ts
 git commit -m "feat(blog): 定义 Markdown 文章内容模型"
 ```
 
@@ -979,7 +979,7 @@ Create `blog.css` for the archive controls, cards, article header, sticky deskto
 
 Run: `npm run test:unit && npm run check && npm run build && node --test tests/site-static-test.mjs`
 
-Expected: PASS; `/blog/`, `/rss.xml`, and `/sitemap-index.xml` build with no published posts; no `/blog/_template/` route exists; unit filters use AND semantics.
+Expected: PASS; `/blog/`, `/rss.xml`, and `/sitemap-index.xml` build with no published posts; no `/blog/blog-template/` route exists; unit filters use AND semantics.
 
 - [ ] **Step 7: Commit the blog system**
 
@@ -1325,7 +1325,7 @@ npm test          # check, build, unit tests, generated-site tests
 
 Include:
 
-- content location `src/content/blog/` and instruction to copy `_template.md` to a filename not beginning with `_`;
+- content location `src/content/blog/` and instruction to copy `blog-template.md` to a new article filename;
 - accepted language values `zh` and `en`, with one language per article;
 - draft and featured behavior;
 - local preview and production build commands;
@@ -1387,7 +1387,7 @@ git status --short --branch
 Confirm:
 
 - [ ] `dist/index.html`, `dist/blog/index.html`, `dist/404.html`, `dist/rss.xml`, and `dist/sitemap-index.xml` exist.
-- [ ] No public post route is generated from `_template.md`.
+- [ ] No public post route is generated from `blog-template.md`.
 - [ ] Runtime source and built output contain no Dominic, Fluid, Gitalk, `Dunky-Z/comment`, old homepage, OAuth, analytics, or tracking content.
 - [ ] Only the confirmed email, GitHub account, education statement, MobiAgent link, and Penglai official link are present.
 - [ ] The UI switches languages without changing or hiding article source language.
