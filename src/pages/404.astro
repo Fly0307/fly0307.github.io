@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 / SIGNAL LOST · UnlearnedMan"
+  description="The requested coordinate is unavailable."
+>
+  <section class="profile-section shell" aria-labelledby="signal-lost-title">
+    <div class="profile-section__panel">
+      <p class="eyebrow">404 / SIGNAL LOST</p>
+      <h1 id="signal-lost-title">
+        <span data-zh lang="zh-CN">未能锁定该坐标</span>
+        <span data-en lang="en">Unable to lock this coordinate</span>
+      </h1>
+      <p data-zh lang="zh-CN">请求的坐标不可用，或已离开当前轨道档案。</p>
+      <p data-en lang="en">The requested coordinate is unavailable or has left this orbital archive.</p>
+      <div class="hero__actions">
+        <a class="button-link" href="/">
+          <span data-zh lang="zh-CN">返回主页</span>
+          <span data-en lang="en">Return home</span>
+        </a>
+        <a class="button-link button-link--quiet" href="/blog/">
+          <span data-zh lang="zh-CN">浏览博客归档</span>
+          <span data-en lang="en">Browse the archive</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
