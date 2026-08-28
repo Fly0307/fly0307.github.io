@@ -95,6 +95,7 @@ for (const text of [
   'data-zh',
   'data-en',
   'aria-live="polite"',
+  '<link rel="icon" href="data:,">',
   'id="hero-image"',
   'data-alt-zh="白色火箭矗立在发射架旁，浅色地面上方是繁星点点的天空"',
   'data-alt-en="A white rocket beside a launch structure on pale terrain beneath a starry sky"',
