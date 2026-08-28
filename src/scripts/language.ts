@@ -14,6 +14,14 @@ export function nextLanguage(language: InterfaceLanguage): InterfaceLanguage {
   return language === 'zh' ? 'en' : 'zh';
 }
 
+export function resolveInterfaceLabel(
+  language: InterfaceLanguage,
+  chineseLabel: string | undefined,
+  englishLabel: string | undefined,
+): string {
+  return language === 'zh' ? chineseLabel ?? '' : englishLabel ?? '';
+}
+
 export function applyInterfaceLanguage(language: InterfaceLanguage): void {
   document.documentElement.dataset.lang = language;
   document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
@@ -26,6 +34,13 @@ export function applyInterfaceLanguage(language: InterfaceLanguage): void {
 
   document.querySelectorAll<HTMLImageElement>('[data-alt-zh][data-alt-en]').forEach((image) => {
     image.alt = language === 'zh' ? image.dataset.altZh ?? '' : image.dataset.altEn ?? '';
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-aria-label-zh][data-aria-label-en]').forEach((element) => {
+    element.setAttribute(
+      'aria-label',
+      resolveInterfaceLabel(language, element.dataset.ariaLabelZh, element.dataset.ariaLabelEn),
+    );
   });
 }
 

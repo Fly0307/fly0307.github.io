@@ -4,6 +4,7 @@ import {
   applyInterfaceLanguage,
   initializeLanguage,
   nextLanguage,
+  resolveInterfaceLabel,
   resolveLanguage,
 } from '../src/scripts/language.ts';
 
@@ -35,13 +36,37 @@ function installBrowserEnvironment(options: {
       altEn: 'A white rocket beside a launch structure on pale terrain beneath a starry sky',
     },
   };
+  const labelledElements = [
+    {
+      dataset: {
+        ariaLabelZh: '主导航',
+        ariaLabelEn: 'Primary navigation',
+      },
+      attributes: new Map<string, string>(),
+      setAttribute(name: string, value: string) {
+        this.attributes.set(name, value);
+      },
+    },
+    {
+      dataset: {
+        ariaLabelZh: '联系方式',
+        ariaLabelEn: 'Contact links',
+      },
+      attributes: new Map<string, string>(),
+      setAttribute(name: string, value: string) {
+        this.attributes.set(name, value);
+      },
+    },
+  ];
   const values = new Map<string, string>();
   if (options.storedLanguage) values.set('unlearnedman-language', options.storedLanguage);
 
   const document = {
     documentElement: { dataset: {} as Record<string, string>, lang: '' },
     querySelector: () => button,
-    querySelectorAll: () => [image],
+    querySelectorAll(selector: string) {
+      return selector.startsWith('[data-alt') ? [image] : labelledElements;
+    },
   };
   const localStorage = {
     getItem(key: string) {
@@ -68,6 +93,7 @@ function installBrowserEnvironment(options: {
     button,
     document,
     image,
+    labelledElements,
     values,
     restore() {
       for (const [name, descriptor] of Object.entries(originals)) {
@@ -93,6 +119,12 @@ test('language toggle alternates between supported values', () => {
   assert.equal(nextLanguage('en'), 'zh');
 });
 
+test('interface labels resolve to the selected language', () => {
+  assert.equal(resolveInterfaceLabel('zh', '主导航', 'Primary navigation'), '主导航');
+  assert.equal(resolveInterfaceLabel('en', '主导航', 'Primary navigation'), 'Primary navigation');
+  assert.equal(resolveInterfaceLabel('en', '仅中文', undefined), '');
+});
+
 test('interface application updates labels, document language, and image alternatives', () => {
   const environment = installBrowserEnvironment();
 
@@ -103,12 +135,16 @@ test('interface application updates labels, document language, and image alterna
     assert.equal(environment.button.textContent, '切换至英文');
     assert.equal(environment.button.ariaLabel, '切换至英文');
     assert.equal(environment.image.alt, environment.image.dataset.altZh);
+    assert.equal(environment.labelledElements[0].attributes.get('aria-label'), '主导航');
+    assert.equal(environment.labelledElements[1].attributes.get('aria-label'), '联系方式');
 
     applyInterfaceLanguage('en');
     assert.equal(environment.document.documentElement.dataset.lang, 'en');
     assert.equal(environment.document.documentElement.lang, 'en');
     assert.equal(environment.button.textContent, 'Switch to Chinese');
     assert.equal(environment.image.alt, environment.image.dataset.altEn);
+    assert.equal(environment.labelledElements[0].attributes.get('aria-label'), 'Primary navigation');
+    assert.equal(environment.labelledElements[1].attributes.get('aria-label'), 'Contact links');
   } finally {
     environment.restore();
   }

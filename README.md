@@ -2,17 +2,19 @@
 
 Personal homepage deployed at [fly0307.github.io](https://fly0307.github.io/).
 
-Preview the static site locally with:
+Install dependencies and start the Astro development server:
 
 ```sh
-python3 -m http.server
+npm install
+npm run dev
 ```
 
-Validate the public-page contract with:
+Run the current local checks before committing:
 
 ```sh
-node tests/site-static-test.mjs
-node tests/site-language-test.mjs
+npm run test:unit
+npm run check
+npm run build
 ```
 
-GitHub Pages deploys the static files from the `main` branch.
+GitHub Pages deployment automation will be documented with the completed site.

@@ -14,9 +14,28 @@ const year = new Date().getFullYear();
       <span aria-hidden="true"> · </span>
       <span>{year}</span>
     </p>
-    <ul class="site-footer__links" aria-label="Contact links">
-      <li><a href={site.github}>GitHub</a></li>
-      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+    <ul
+      class="site-footer__links"
+      aria-label="联系方式"
+      data-aria-label-zh="联系方式"
+      data-aria-label-en="Contact links"
+    >
+      <li>
+        <a
+          href={site.github}
+          aria-label={`${site.name} 的 GitHub 主页`}
+          data-aria-label-zh={`${site.name} 的 GitHub 主页`}
+          data-aria-label-en={`${site.name} GitHub profile`}
+        >GitHub</a>
+      </li>
+      <li>
+        <a
+          href={`mailto:${site.email}`}
+          aria-label={`发送邮件至 ${site.email}`}
+          data-aria-label-zh={`发送邮件至 ${site.email}`}
+          data-aria-label-en={`Email ${site.email}`}
+        >{site.email}</a>
+      </li>
     </ul>
   </div>
 </footer>
