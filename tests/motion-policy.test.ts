@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { clampProgress, createStars, shouldAnimate } from '../src/scripts/motion-policy.ts';
 
@@ -21,4 +22,16 @@ test('generated stars stay inside the canvas', () => {
     { x: 50, y: 25, radius: 1.25, alpha: 0.65 },
     { x: 50, y: 25, radius: 1.25, alpha: 0.65 },
   ]);
+});
+
+test('continuous motion modules fall back safely without IntersectionObserver', async () => {
+  const root = new URL('../', import.meta.url);
+  const modules = await Promise.all([
+    readFile(new URL('src/scripts/starfield.ts', root), 'utf8'),
+    readFile(new URL('src/scripts/hero-parallax.ts', root), 'utf8'),
+  ]);
+
+  modules.forEach((source) => {
+    assert.match(source, /if \(!\('IntersectionObserver' in window\)\) return;/);
+  });
 });

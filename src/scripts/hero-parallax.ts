@@ -5,6 +5,7 @@ const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
 export function initializeHeroParallax(): void {
   const hero = document.querySelector<HTMLElement>('[data-hero-parallax]');
   if (!hero) return;
+  if (!('IntersectionObserver' in window)) return;
 
   const reducedMotion = window.matchMedia(reducedMotionQuery);
   let inViewport = false;

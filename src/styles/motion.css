@@ -21,6 +21,10 @@
   transform: none;
 }
 
+[data-orbit-section] {
+  scroll-margin-top: 6rem;
+}
+
 .motion-ready [data-reveal] {
   opacity: 0;
   transform: translateY(1.4rem);
@@ -128,6 +132,12 @@
 
   .orbital-progress ol {
     display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-orbit-section] {
+    scroll-margin-top: 8rem;
   }
 }
 

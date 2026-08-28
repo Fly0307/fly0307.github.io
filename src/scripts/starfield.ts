@@ -9,6 +9,7 @@ export function initializeStarfield(): void {
 
   const context = canvas.getContext('2d');
   if (!context) return;
+  if (!('IntersectionObserver' in window)) return;
 
   const reducedMotion = window.matchMedia(reducedMotionQuery);
   const mobile = window.matchMedia(mobileQuery);
