@@ -32,7 +32,17 @@ function check(label, callback) {
 
 function walk(directory) {
   const files = [];
+  const excludedDirectories = new Set([
+    '.agents',
+    '.codex',
+    '.git',
+    '.superpowers',
+    'docs',
+    'node_modules',
+    'tests',
+  ]);
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (entry.isDirectory() && excludedDirectories.has(entry.name)) continue;
     const path = join(directory, entry.name);
     if (entry.isDirectory()) files.push(...walk(path));
     else files.push(path);
@@ -50,7 +60,11 @@ const requiredFiles = [
 ].map((file) => resolve(root, file));
 
 for (const file of requiredFiles) {
-  check(`required file ${displayPath(file)}`, () => statSync(file));
+  check(`required file ${displayPath(file)}`, () => {
+    if (!statSync(file).isFile()) {
+      throw new Error(`${displayPath(file)} is not a regular file`);
+    }
+  });
 }
 
 const html = resolve(root, 'index.html');
@@ -99,8 +113,12 @@ for (const directory of [
   'about',
 ]) {
   check(`legacy directory ${directory}`, () => {
-    if (statSync(resolve(root, directory)).isDirectory()) {
-      throw new Error(`${directory} still exists`);
+    try {
+      if (statSync(resolve(root, directory)).isDirectory()) {
+        throw new Error(`${directory} still exists`);
+      }
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
     }
   });
 }
