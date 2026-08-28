@@ -1,13 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
+import Hero from '../components/Hero.astro';
+import LatestTransmissions from '../components/LatestTransmissions.astro';
+import ProfileSection from '../components/ProfileSection.astro';
+import ProjectMissions from '../components/ProjectMissions.astro';
+import ResearchOrbit from '../components/ResearchOrbit.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { selectHomepagePosts } from '../lib/posts';
+
+const posts = selectHomepagePosts(await getCollection('blog'), 3);
 ---
 
-<BaseLayout>
-  <section class="shell" aria-labelledby="temporary-heading">
-    <p data-zh lang="zh-CN">轨道档案</p>
-    <p data-en lang="en">Orbital Archive</p>
-    <h1 id="temporary-heading">UnlearnedMan</h1>
-    <p data-zh lang="zh-CN">个人研究档案正在准备进入轨道。</p>
-    <p data-en lang="en">A personal research archive is preparing to enter orbit.</p>
-  </section>
+<BaseLayout description="UnlearnedMan 的个人主页 / Personal homepage of UnlearnedMan">
+  <Hero />
+  <ResearchOrbit />
+  <ProjectMissions />
+  <LatestTransmissions posts={posts} />
+  <ProfileSection />
 </BaseLayout>

@@ -1,0 +1,15 @@
+---
+import { normalizeTag } from '../lib/posts';
+
+interface Props {
+  tags: string[];
+}
+
+const { tags } = Astro.props;
+---
+
+{tags.length > 0 && (
+  <ul class="tag-list" aria-label="Tags">
+    {tags.map((tag) => <li data-tag-key={normalizeTag(tag)}>{tag}</li>)}
+  </ul>
+)}

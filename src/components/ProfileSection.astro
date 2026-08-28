@@ -1,0 +1,27 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="about" class="profile-section shell" aria-labelledby="about-heading" data-reveal>
+  <header class="section-heading">
+    <p class="eyebrow">MISSION 05 · PROFILE</p>
+    <h2 id="about-heading">
+      <span data-zh lang="zh-CN">关于</span>
+      <span data-en lang="en">Profile</span>
+    </h2>
+  </header>
+  <div class="profile-section__panel">
+    <p data-zh lang="zh-CN">就读于上海交通大学本科和硕士阶段。</p>
+    <p data-en lang="en">Undergraduate and master's education at Shanghai Jiao Tong University.</p>
+    <dl class="profile-section__links">
+      <div>
+        <dt>GitHub</dt>
+        <dd><a href={site.github} rel="noreferrer">{site.github}</a></dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+      </div>
+    </dl>
+  </div>
+</section>

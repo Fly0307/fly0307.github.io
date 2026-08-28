@@ -1,0 +1,29 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="projects" class="project-missions shell" aria-labelledby="projects-heading" data-reveal>
+  <header class="section-heading">
+    <p class="eyebrow">MISSION 03 · PAYLOAD</p>
+    <h2 id="projects-heading">
+      <span data-zh lang="zh-CN">项目任务</span>
+      <span data-en lang="en">Project missions</span>
+    </h2>
+    <p data-zh lang="zh-CN">正在追踪的开源项目与系统工作。</p>
+    <p data-en lang="en">Open-source projects and systems work currently on the console.</p>
+  </header>
+  <div class="project-missions__grid">
+    {site.projects.map((project, index) => (
+      <article class="project-card">
+        <p class="project-card__index">PAYLOAD {String(index + 1).padStart(2, '0')}</p>
+        <h3>{project.name}</h3>
+        <p data-zh lang="zh-CN">{project.zh}</p>
+        <p data-en lang="en">{project.en}</p>
+        <a href={project.url} rel="noreferrer">
+          <span data-zh lang="zh-CN">打开项目 ↗</span>
+          <span data-en lang="en">Open project ↗</span>
+        </a>
+      </article>
+    ))}
+  </div>
+</section>

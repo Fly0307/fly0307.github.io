@@ -1,0 +1,35 @@
+---
+interface Props {
+  publishedAt: Date;
+  updatedAt?: Date;
+  language: 'zh' | 'en';
+  readingMinutes: number;
+}
+
+const { publishedAt, updatedAt, language, readingMinutes } = Astro.props;
+const formatter = new Intl.DateTimeFormat('en-CA', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  timeZone: 'UTC',
+});
+---
+
+<p class="post-meta">
+  <time datetime={publishedAt.toISOString()}>{formatter.format(publishedAt)}</time>
+  {updatedAt && updatedAt.getTime() !== publishedAt.getTime() && (
+    <span class="post-meta__updated">
+      <span data-zh lang="zh-CN">更新于</span>
+      <span data-en lang="en">Updated</span>
+      {' '}
+      <time datetime={updatedAt.toISOString()}>{formatter.format(updatedAt)}</time>
+    </span>
+  )}
+  <span class="post-meta__language" lang={language === 'zh' ? 'zh-CN' : 'en'}>
+    {language === 'zh' ? '中文' : 'English'}
+  </span>
+  <span>
+    <span data-zh lang="zh-CN">约 {readingMinutes} 分钟阅读</span>
+    <span data-en lang="en">About {readingMinutes} min read</span>
+  </span>
+</p>

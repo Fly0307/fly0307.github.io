@@ -1,0 +1,30 @@
+---
+import type { PostRecord } from '../lib/posts';
+import { estimateReadingMinutes } from '../lib/posts';
+import PostMeta from './PostMeta.astro';
+import TagList from './TagList.astro';
+
+interface Props {
+  post: PostRecord;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+const language = post.data.language;
+---
+
+<article class="post-card" lang={language === 'zh' ? 'zh-CN' : 'en'}>
+  <p class="post-card__index" aria-hidden="true">TRANSMISSION</p>
+  <Heading class="post-card__title">
+    <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+  </Heading>
+  <p class="post-card__description">{post.data.description}</p>
+  <PostMeta
+    publishedAt={post.data.publishedAt}
+    updatedAt={post.data.updatedAt}
+    language={language}
+    readingMinutes={estimateReadingMinutes(post.body)}
+  />
+  <TagList tags={post.data.tags} />
+</article>

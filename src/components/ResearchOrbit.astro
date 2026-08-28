@@ -1,0 +1,30 @@
+---
+const nodes = [
+  { zh: '智能体', en: 'Intelligent agents', state: 'active' },
+  { zh: '可信执行环境', en: 'Trusted execution environments', state: 'tracked' },
+  { zh: '系统研究', en: 'Systems research', state: 'tracked' },
+] as const;
+---
+
+<section id="research" class="orbital-section shell" aria-labelledby="research-heading" data-reveal>
+  <header class="section-heading">
+    <p class="eyebrow">MISSION 02 · ORBIT</p>
+    <h2 id="research-heading">
+      <span data-zh lang="zh-CN">研究轨道</span>
+      <span data-en lang="en">Research orbit</span>
+    </h2>
+    <p data-zh lang="zh-CN">当前关注方向以三个互相连接的研究节点呈现。</p>
+    <p data-en lang="en">Current interests are arranged as three connected research nodes.</p>
+  </header>
+  <ol class="research-orbit">
+    {nodes.map((node, index) => (
+      <li class:list={[`research-orbit__node--${node.state}`]}>
+        <span class="research-orbit__number">0{index + 1}</span>
+        <h3>
+          <span data-zh lang="zh-CN">{node.zh}</span>
+          <span data-en lang="en">{node.en}</span>
+        </h3>
+      </li>
+    ))}
+  </ol>
+</section>

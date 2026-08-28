@@ -1,0 +1,32 @@
+---
+import type { PostRecord } from '../lib/posts';
+import PostCard from './PostCard.astro';
+
+interface Props {
+  posts: PostRecord[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section id="transmissions" class="latest-transmissions shell" aria-labelledby="transmissions-heading" data-reveal>
+  <header class="section-heading">
+    <p class="eyebrow">MISSION 04 · TRANSMISSIONS</p>
+    <h2 id="transmissions-heading">
+      <span data-zh lang="zh-CN">最新传输</span>
+      <span data-en lang="en">Latest transmissions</span>
+    </h2>
+    <p data-zh lang="zh-CN">来自研究与构建过程的可公开记录。</p>
+    <p data-en lang="en">Public notes from research and building in progress.</p>
+  </header>
+  {posts.length > 0 ? (
+    <div class="transmission-grid">
+      {posts.slice(0, 3).map((post) => <PostCard post={post} headingLevel="h3" />)}
+    </div>
+  ) : (
+    <p class="empty-posts" data-empty-posts>
+      <span data-zh lang="zh-CN">尚无已发布的传输记录。首篇文章即将进入轨道。</span>
+      <span data-en lang="en">No transmissions are published yet. The first entry is preparing for orbit.</span>
+    </p>
+  )}
+</section>

@@ -9,7 +9,7 @@
   top: 0;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--space-950) 86%, transparent);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
 }
 
 .site-header__inner,
