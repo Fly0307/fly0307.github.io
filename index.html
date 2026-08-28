@@ -20,7 +20,7 @@
         <div class="nav-actions">
           <a href="#projects"><span data-zh lang="zh-CN">项目</span><span data-en lang="en">Projects</span></a>
           <a href="#contact"><span data-zh lang="zh-CN">联系</span><span data-en lang="en">Contact</span></a>
-          <button id="language-toggle" type="button" aria-live="polite" aria-pressed="true" aria-label="Switch language to English">English</button>
+          <button id="language-toggle" type="button" lang="zh-CN" aria-live="polite" aria-label="切换至英文">切换至英文</button>
         </div>
       </nav>
     </header>
@@ -35,15 +35,15 @@
           <p class="hero-note" data-zh lang="zh-CN">个人主页</p>
           <p class="hero-note" data-en lang="en">Personal homepage</p>
           <div class="action-row">
-            <a class="button primary" href="https://github.com/Fly0307">GitHub <span aria-hidden="true">↗</span></a>
+            <a class="button primary" href="https://github.com/Fly0307" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
             <a class="button secondary" href="mailto:fly0307@sjtu.edu.cn"><span data-zh lang="zh-CN">邮件</span><span data-en lang="en">Email</span> <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <figure class="hero-visual">
-          <img src="/img/hero-space.png" alt="蓝色地球与群星交织的太空景象 / Space scene with blue Earth and stars" width="1600" height="900">
+          <img id="hero-image" src="/img/hero-space.png" alt="白色火箭矗立在发射架旁，浅色地面上方是繁星点点的天空" data-alt-zh="白色火箭矗立在发射架旁，浅色地面上方是繁星点点的天空" data-alt-en="A white rocket beside a launch structure on pale terrain beneath a starry sky" width="1600" height="900">
           <figcaption>
-            <span data-zh lang="zh-CN">来自地球边缘的视角</span>
-            <span data-en lang="en">A view from Earth’s edge</span>
+            <span data-zh lang="zh-CN">发射架旁的白色火箭</span>
+            <span data-en lang="en">A white rocket at its launch structure</span>
           </figcaption>
         </figure>
       </section>
@@ -57,16 +57,16 @@
           <article class="project-card">
             <p class="project-index">01</p>
             <h3>MobiAgent</h3>
-            <p data-zh lang="zh-CN">MobiAgent 项目。</p>
-            <p data-en lang="en">The MobiAgent project.</p>
-            <a href="https://github.com/Fly0307/MobiAgent">MobiAgent <span aria-hidden="true">↗</span></a>
+            <p data-zh lang="zh-CN">MobiAgent 聚焦移动设备智能 GUI Agent。</p>
+            <p data-en lang="en">MobiAgent focuses on intelligent GUI agents for mobile devices.</p>
+            <a href="https://github.com/Fly0307/MobiAgent" rel="noreferrer">MobiAgent <span aria-hidden="true">↗</span></a>
           </article>
           <article class="project-card">
             <p class="project-index">02</p>
             <h3>Penglai</h3>
-            <p data-zh lang="zh-CN">Penglai 项目。</p>
-            <p data-en lang="en">The Penglai project.</p>
-            <a href="https://penglai-enclave.systems/">Penglai <span aria-hidden="true">↗</span></a>
+            <p data-zh lang="zh-CN">Penglai 是面向 RISC-V 的开源、可扩展可信执行环境系统。</p>
+            <p data-en lang="en">Penglai is an open-source, scalable trusted execution environment system for RISC-V.</p>
+            <a href="https://penglai-enclave.systems/" rel="noreferrer">Penglai <span aria-hidden="true">↗</span></a>
           </article>
         </div>
       </section>
@@ -94,7 +94,7 @@
 
     <footer class="site-footer shell">
       <p><span data-zh lang="zh-CN">UnlearnedMan 的个人主页</span><span data-en lang="en">Personal homepage of UnlearnedMan</span></p>
-      <p>© <span id="year">2026</span></p>
+      <p>© <span id="year"></span></p>
     </footer>
   </body>
 </html>

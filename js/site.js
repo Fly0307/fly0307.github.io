@@ -11,12 +11,19 @@ export function setLanguage(language) {
   if (typeof document === 'undefined') return selectedLanguage;
 
   document.documentElement.dataset.lang = selectedLanguage;
+  document.documentElement.lang = selectedLanguage === 'zh' ? 'zh-CN' : 'en';
   const toggle = document.getElementById('language-toggle');
   if (toggle) {
     const isChinese = selectedLanguage === 'zh';
-    toggle.textContent = isChinese ? 'English' : '中文';
-    toggle.setAttribute('aria-label', isChinese ? 'Switch language to English' : '切换语言为中文');
-    toggle.setAttribute('aria-pressed', String(isChinese));
+    const actionLabel = isChinese ? '切换至英文' : 'Switch to Chinese';
+    toggle.textContent = actionLabel;
+    toggle.setAttribute('aria-label', actionLabel);
+    toggle.setAttribute('lang', isChinese ? 'zh-CN' : 'en');
+  }
+
+  const heroImage = document.getElementById('hero-image');
+  if (heroImage) {
+    heroImage.alt = selectedLanguage === 'zh' ? heroImage.dataset.altZh : heroImage.dataset.altEn;
   }
 
   try {
@@ -28,6 +35,9 @@ export function setLanguage(language) {
 }
 
 if (typeof document !== 'undefined') {
+  const year = document.getElementById('year');
+  if (year) year.textContent = String(new Date().getFullYear());
+
   let storedLanguage;
   try {
     storedLanguage = localStorage.getItem(storageKey);

@@ -22,6 +22,13 @@ function mustNotContain(file, text) {
   }
 }
 
+function mustNotContainCaseInsensitive(file, text) {
+  const contents = readFileSync(file, 'utf8');
+  if (contents.toLocaleLowerCase('en-US').includes(text.toLocaleLowerCase('en-US'))) {
+    throw new Error(`${displayPath(file)} contains forbidden ${JSON.stringify(text)}`);
+  }
+}
+
 function check(label, callback) {
   try {
     callback();
@@ -88,9 +95,35 @@ for (const text of [
   'data-zh',
   'data-en',
   'aria-live="polite"',
+  'id="hero-image"',
+  'data-alt-zh="白色火箭矗立在发射架旁，浅色地面上方是繁星点点的天空"',
+  'data-alt-en="A white rocket beside a launch structure on pale terrain beneath a starry sky"',
+  'MobiAgent 聚焦移动设备智能 GUI Agent。',
+  'MobiAgent focuses on intelligent GUI agents for mobile devices.',
+  'Penglai 是面向 RISC-V 的开源、可扩展可信执行环境系统。',
+  'Penglai is an open-source, scalable trusted execution environment system for RISC-V.',
+  '<span id="year"></span>',
 ]) {
   check(`index.html content`, () => mustContain(html, text));
 }
+
+check('index.html language toggle command semantics', () => {
+  mustNotContain(html, 'aria-pressed');
+});
+
+const indexContents = readFileSync(html, 'utf8');
+const externalLinks = [...indexContents.matchAll(/<a\b[^>]*\bhref="https?:\/\/[^"\s]+"[^>]*>/g)].map(
+  ([tag]) => tag,
+);
+check('index.html external link safety', () => {
+  if (externalLinks.length === 0) throw new Error('index.html has no external HTTP(S) links to validate');
+  for (const tag of externalLinks) {
+    const rel = tag.match(/\brel="([^"]*)"/)?.[1].split(/\s+/) ?? [];
+    if (!rel.includes('noreferrer')) {
+      throw new Error(`external link is missing rel="noreferrer": ${tag}`);
+    }
+  }
+});
 
 for (const [file, text] of [
   [resolve(root, 'css/site.css'), 'prefers-reduced-motion'],
@@ -101,17 +134,18 @@ for (const [file, text] of [
   check(`${displayPath(file)} content`, () => mustContain(file, text));
 }
 
-const publicFiles = walk(root).filter((file) => /\.(html|css|js)$/.test(file));
-for (const file of publicFiles) {
-  for (const text of [
-    'Dominic',
-    'Dunky-Z/comment',
-    'clientSecret',
-    'hm.baidu.com',
-    'Gitalk',
-    'Hexo',
-  ]) {
-    check(`${displayPath(file)} legacy content`, () => mustNotContain(file, text));
+const forbiddenLegacyTokens = [
+  ['Dom', 'inic'],
+  ['Dunky', '-Z/', 'comment'],
+  ['client', 'Secret'],
+  ['hm.', 'baidu', '.com'],
+  ['Git', 'alk'],
+  ['He', 'xo'],
+].map((fragments) => fragments.join(''));
+const publicTextFiles = walk(root).filter((file) => /\.(?:html|css|js|mjs|md)$/.test(file));
+for (const file of publicTextFiles) {
+  for (const text of forbiddenLegacyTokens) {
+    check(`${displayPath(file)} legacy content`, () => mustNotContainCaseInsensitive(file, text));
   }
 }
 

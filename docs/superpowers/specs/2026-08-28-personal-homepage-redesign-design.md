@@ -2,7 +2,7 @@
 
 ## 目标
 
-将当前由旧 Hexo 博客生成的静态归档重构为 `UnlearnedMan` 的轻量中英双语个人主页。新站点突出上海交通大学教育经历与 MobiAgent、Penglai 两个代表项目，同时彻底移除原作者文章、身份信息、评论配置、统计代码和旧站链接。
+将当前旧博客静态归档重构为 `UnlearnedMan` 的轻量中英双语个人主页。新站点突出上海交通大学教育经历与 MobiAgent、Penglai 两个代表项目，同时彻底移除原作者文章、身份信息、评论配置、统计代码和旧站链接。
 
 站点继续通过 `Fly0307/fly0307.github.io` 仓库的 `main` 分支根目录发布，不引入新的构建工具或服务端依赖。
 
@@ -58,7 +58,7 @@
 - `.nojekyll`：明确禁用 Jekyll 处理，按原样发布静态文件。
 - `README.md`：说明站点内容、维护方式和部署方式。
 
-不引入 `package.json`、Hexo、Jekyll、自定义 GitHub Actions 或其他构建步骤。推送到 `main` 后沿用现有 GitHub Pages 分支发布配置。
+不引入 `package.json`、静态博客生成器、Jekyll、自定义 GitHub Actions 或其他构建步骤。推送到 `main` 后沿用现有 GitHub Pages 分支发布配置。
 
 ## 清理范围
 
@@ -68,9 +68,9 @@
 - `archives/`、`categories/`、`tags/`、`page/`、`links/`、旧 `about/`。
 - 旧 Fluid 主题的 CSS、JavaScript、搜索索引、提示库和图片素材。
 - Jekyll 示例 `_config.yml`、`index.md`。
-- Gitalk OAuth 配置、`Dunky-Z/comment`、百度统计 ID、`Dominic` 作者信息及旧主页链接。
+- 旧评论集成 OAuth 配置、旧评论仓库、旧访问统计标记、旧作者信息及旧主页链接。
 
-Git 历史不会在本次重构中重写。若旧 Gitalk OAuth Secret 仍然有效，仍需由对应 OAuth App 所有者撤销或轮换；从当前版本删除并不能清除历史提交中的凭据。
+Git 历史不会在本次重构中重写。若旧评论集成的 OAuth 凭据仍然有效，仍需由对应 OAuth App 所有者撤销或轮换；从当前版本删除并不能清除历史提交中的凭据。
 
 ## 可访问性与安全
 
@@ -89,7 +89,7 @@ Git 历史不会在本次重构中重写。若旧 Gitalk OAuth Secret 仍然有�
 3. GitHub、邮箱、MobiAgent 和 Penglai 链接均指向确认地址。
 4. 桌面和移动视口无水平溢出，导航与内容可正常阅读。
 5. 键盘可以访问所有按钮和链接，减少动画设置生效。
-6. 仓库当前版本不再包含旧文章目录、旧作者标识、Gitalk Secret、百度统计 ID 或 `Dunky-Z/comment`。
+6. 仓库当前版本不再包含旧文章目录、旧作者标识、旧评论凭据、旧访问统计标记或旧评论仓库地址。
 7. 站点无需构建即可由 GitHub Pages 从 `main` 根目录发布。
 
 ## 非目标
