@@ -33,21 +33,29 @@ function check(label, callback) {
 function walk(directory) {
   const files = [];
   const excludedDirectories = new Set([
-    '.agents',
-    '.codex',
     '.git',
     '.superpowers',
-    'docs',
-    'node_modules',
-    'tests',
   ]);
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
     if (entry.isDirectory() && excludedDirectories.has(entry.name)) continue;
     const path = join(directory, entry.name);
     if (entry.isDirectory()) files.push(...walk(path));
-    else files.push(path);
+    else if (entry.name !== '.DS_Store') files.push(path);
   }
   return files;
+}
+
+function isAllowedPublishedFile(file) {
+  const path = displayPath(file);
+  return [
+    'README.md',
+    '.nojekyll',
+    'index.html',
+    '404.html',
+    'css/site.css',
+    'js/site.js',
+    'img/hero-space.png',
+  ].includes(path) || path.startsWith('docs/') || path.startsWith('tests/');
 }
 
 const requiredFiles = [
@@ -105,6 +113,14 @@ for (const file of publicFiles) {
   ]) {
     check(`${displayPath(file)} legacy content`, () => mustNotContain(file, text));
   }
+}
+
+for (const file of walk(root)) {
+  check(`published file ${displayPath(file)}`, () => {
+    if (!isAllowedPublishedFile(file)) {
+      throw new Error(`${displayPath(file)} is not in the approved published file set`);
+    }
+  });
 }
 
 for (const directory of [
