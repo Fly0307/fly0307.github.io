@@ -335,9 +335,20 @@ test('drafts are excluded and featured posts lead the homepage selection', () =>
 });
 
 test('tag and reading-time helpers are deterministic', () => {
-  assert.equal(normalizeTag('  Trusted Execution  '), 'trusted-execution');
-  assert.equal(normalizeTag('C++'), 'c');
-  assert.equal(normalizeTag('Agent / Systems'), 'agent-systems');
+  const c = normalizeTag('C');
+  const cpp = normalizeTag('C++');
+  const csharp = normalizeTag('C#');
+
+  assert.equal(c, 'c');
+  assert.equal(cpp, 'c~2b~~2b~');
+  assert.equal(csharp, 'c~23~');
+  assert.notEqual(c, cpp);
+  assert.notEqual(c, csharp);
+  assert.notEqual(cpp, csharp);
+  assert.ok(normalizeTag('+++').length > 0);
+  assert.ok(normalizeTag('🚀').length > 0);
+  assert.notEqual(normalizeTag('RISC-V'), normalizeTag('RISC V'));
+  assert.equal(normalizeTag('研究'), '~7814~~7a76~');
   assert.equal(estimateReadingMinutes('hello world'), 1);
   assert.equal(estimateReadingMinutes('研'.repeat(601)), 3);
 });
@@ -421,12 +432,13 @@ export function selectHomepagePosts<T extends PostRecord>(posts: T[], limit = 3)
 }
 
 export function normalizeTag(tag: string): string {
-  return tag
+  return Array.from(tag
     .trim()
     .normalize('NFKC')
-    .toLocaleLowerCase('en-US')
-    .replace(/[^\p{L}\p{N}]+/gu, '-')
-    .replace(/^-+|-+$/g, '');
+    .toLocaleLowerCase('en-US'), (character) => {
+    if (/^[a-z0-9]$/.test(character)) return character;
+    return `~${character.codePointAt(0)!.toString(16)}~`;
+  }).join('');
 }
 
 export function estimateReadingMinutes(body = ''): number {

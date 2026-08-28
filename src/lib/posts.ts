@@ -20,12 +20,13 @@ export function selectHomepagePosts<T extends PostRecord>(posts: T[], limit = 3)
 }
 
 export function normalizeTag(tag: string): string {
-  return tag
+  return Array.from(tag
     .trim()
     .normalize('NFKC')
-    .toLocaleLowerCase('en-US')
-    .replace(/[^\p{L}\p{N}]+/gu, '-')
-    .replace(/^-+|-+$/g, '');
+    .toLocaleLowerCase('en-US'), (character) => {
+    if (/^[a-z0-9]$/.test(character)) return character;
+    return `~${character.codePointAt(0)!.toString(16)}~`;
+  }).join('');
 }
 
 export function estimateReadingMinutes(body = ''): number {
