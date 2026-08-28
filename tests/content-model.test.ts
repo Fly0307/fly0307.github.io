@@ -63,7 +63,9 @@ test('drafts are excluded and featured posts lead the homepage selection', () =>
 });
 
 test('tag and reading-time helpers are deterministic', () => {
-  assert.equal(normalizeTag('  Trusted Execution  '), 'trusted execution');
+  assert.equal(normalizeTag('  Trusted Execution  '), 'trusted-execution');
+  assert.equal(normalizeTag('C++'), 'c');
+  assert.equal(normalizeTag('Agent / Systems'), 'agent-systems');
   assert.equal(estimateReadingMinutes('hello world'), 1);
   assert.equal(estimateReadingMinutes('研'.repeat(601)), 3);
 });

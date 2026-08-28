@@ -20,7 +20,12 @@ export function selectHomepagePosts<T extends PostRecord>(posts: T[], limit = 3)
 }
 
 export function normalizeTag(tag: string): string {
-  return tag.trim().normalize('NFKC').toLocaleLowerCase('en-US');
+  return tag
+    .trim()
+    .normalize('NFKC')
+    .toLocaleLowerCase('en-US')
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 export function estimateReadingMinutes(body = ''): number {
