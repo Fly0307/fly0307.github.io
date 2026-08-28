@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fly0307.github.io/sitemap-index.xml

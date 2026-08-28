@@ -1,0 +1,88 @@
+---
+import type { MarkdownHeading } from 'astro';
+import PostMeta from '../components/PostMeta.astro';
+import TagList from '../components/TagList.astro';
+import type { PostRecord } from '../lib/posts';
+import { estimateReadingMinutes } from '../lib/posts';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  post: PostRecord;
+  headings: MarkdownHeading[];
+  previous: PostRecord | null;
+  next: PostRecord | null;
+}
+
+const { post, headings, previous, next } = Astro.props;
+const postLanguage = post.data.language === 'zh' ? 'zh-CN' : 'en';
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+<BaseLayout
+  title={`${post.data.title} · UnlearnedMan`}
+  description={post.data.description}
+  contentLanguage={post.data.language}
+>
+  <article class="post shell" lang={postLanguage}>
+    <header class="post__header">
+      <p class="eyebrow">TRANSMISSION / {post.data.language.toUpperCase()}</p>
+      <h1>{post.data.title}</h1>
+      <p class="post__description">{post.data.description}</p>
+      <PostMeta
+        publishedAt={post.data.publishedAt}
+        updatedAt={post.data.updatedAt}
+        language={post.data.language}
+        readingMinutes={estimateReadingMinutes(post.body)}
+      />
+      <TagList tags={post.data.tags} />
+    </header>
+
+    <div class:list={['post__content', { 'post__content--without-toc': toc.length === 0 }]}>
+      {toc.length > 0 && (
+        <nav
+          class="post-toc"
+          aria-label="文章目录"
+          data-aria-label-zh="文章目录"
+          data-aria-label-en="On this page"
+        >
+          <p>
+            <span data-zh lang="zh-CN">目录</span>
+            <span data-en lang="en">On this page</span>
+          </p>
+          <ol>
+            {toc.map((heading) => (
+              <li class:list={{ 'post-toc__item--nested': heading.depth === 3 }}>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <div class="prose"><slot /></div>
+    </div>
+
+    {(previous || next) && (
+      <nav
+        class="post-navigation"
+        aria-label="文章导航"
+        data-aria-label-zh="文章导航"
+        data-aria-label-en="Post navigation"
+      >
+        {previous ? (
+          <a href={`/blog/${previous.id}/`} rel="prev">
+            <span data-zh lang="zh-CN">← 较早传输</span>
+            <span data-en lang="en">← Earlier transmission</span>
+            <strong lang={previous.data.language === 'zh' ? 'zh-CN' : 'en'}>{previous.data.title}</strong>
+          </a>
+        ) : <span />}
+        {next ? (
+          <a href={`/blog/${next.id}/`} rel="next">
+            <span data-zh lang="zh-CN">较新传输 →</span>
+            <span data-en lang="en">Newer transmission →</span>
+            <strong lang={next.data.language === 'zh' ? 'zh-CN' : 'en'}>{next.data.title}</strong>
+          </a>
+        ) : <span />}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

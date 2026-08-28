@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import PostCard from '../../components/PostCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, normalizeTag } from '../../lib/posts';
+
+const posts = getPublishedPosts(await getCollection('blog'));
+const tags = [...new Map(posts.flatMap((post) => post.data.tags).map((tag) => [normalizeTag(tag), tag])).entries()]
+  .sort(([, left], [, right]) => left.localeCompare(right));
+const years = [...new Set(posts.map((post) => String(post.data.publishedAt.getUTCFullYear())))].sort((a, b) => b.localeCompare(a));
+---
+
+<BaseLayout
+  title="Blog · UnlearnedMan"
+  description="UnlearnedMan 的研究笔记与技术传输记录。"
+>
+  <section class="blog-archive shell" data-blog-archive aria-labelledby="blog-title">
+    <header class="blog-archive__header">
+      <p class="eyebrow">MISSION / 04</p>
+      <h1 id="blog-title">
+        <span data-zh lang="zh-CN">深空传输记录</span>
+        <span data-en lang="en">Deep-space transmissions</span>
+      </h1>
+      <p>
+        <span data-zh lang="zh-CN">按文章原始语言、标签与年份浏览研究笔记；每篇文章只保留其作者写作时的语言。</span>
+        <span data-en lang="en">Browse research notes by original language, tag, and year. Each post stays in the language in which it was written.</span>
+      </p>
+    </header>
+
+    <form class="blog-filter" data-blog-filter>
+      <label>
+        <span data-zh lang="zh-CN">语言</span>
+        <span data-en lang="en">Language</span>
+        <select name="language">
+          <option value="">All languages / 全部语言</option>
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <label>
+        <span data-zh lang="zh-CN">标签</span>
+        <span data-en lang="en">Tag</span>
+        <select name="tag">
+          <option value="">All tags / 全部标签</option>
+          {tags.map(([key, label]) => <option value={key}>{label}</option>)}
+        </select>
+      </label>
+      <label>
+        <span data-zh lang="zh-CN">年份</span>
+        <span data-en lang="en">Year</span>
+        <select name="year">
+          <option value="">All years / 全部年份</option>
+          {years.map((year) => <option value={year}>{year}</option>)}
+        </select>
+      </label>
+    </form>
+
+    {posts.length === 0 ? (
+      <p class="empty-posts" data-empty-posts>
+        <span data-zh lang="zh-CN">尚未发布传输记录。新的 Markdown 文章将在完成后从这里进入轨道。</span>
+        <span data-en lang="en">No transmissions are published yet. New Markdown posts will enter orbit here when ready.</span>
+      </p>
+    ) : (
+      <div class="blog-archive__grid">
+        {posts.map((post) => (
+          <div
+            data-blog-card
+            data-language={post.data.language}
+            data-tags={JSON.stringify(post.data.tags.map(normalizeTag))}
+            data-year={String(post.data.publishedAt.getUTCFullYear())}
+          >
+            <PostCard post={post} />
+          </div>
+        ))}
+      </div>
+    )}
+
+    <p class="empty-posts" data-filter-empty hidden>
+      <span data-zh lang="zh-CN">没有符合当前筛选条件的传输记录。</span>
+      <span data-en lang="en">No transmissions match the current filters.</span>
+    </p>
+  </section>
+
+  <script>
+    import { initializeBlogFilter } from '../../scripts/blog-filter';
+
+    initializeBlogFilter();
+  </script>
+</BaseLayout>

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
@@ -19,4 +19,23 @@ test('generated homepage presents the confirmed Orbital Archive profile', async 
   assert.match(home, /id="about"/);
   assert.match(home, /data-empty-posts/);
   assert.doesNotMatch(home, /Dominic|Dunky-Z\/comment|Gitalk/i);
+});
+
+test('generated blog surfaces only the static publishing contract', async () => {
+  const blog = await readFile(new URL('dist/blog/index.html', root), 'utf8');
+  const rss = await readFile(new URL('dist/rss.xml', root), 'utf8');
+  const sitemap = await readFile(new URL('dist/sitemap-index.xml', root), 'utf8');
+  const robots = await readFile(new URL('dist/robots.txt', root), 'utf8');
+  const blogEntries = await readdir(new URL('dist/blog/', root));
+
+  assert.match(blog, /data-blog-archive/);
+  assert.match(blog, /data-empty-posts/);
+  assert.match(blog, /name="language"/);
+  assert.match(blog, /name="tag"/);
+  assert.match(blog, /name="year"/);
+  assert.match(rss, /<rss[\s>]/);
+  assert.match(sitemap, /<sitemapindex[\s>]/);
+  assert.match(robots, /Sitemap: https:\/\/fly0307\.github\.io\/sitemap-index\.xml/);
+  assert.deepEqual(blogEntries.sort(), ['index.html']);
+  assert.doesNotMatch(`${blog}\n${rss}\n${sitemap}`, /blog-template|文章标题 \/ Post title/);
 });
