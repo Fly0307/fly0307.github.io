@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <p>
+      <span>{site.name}</span>
+      <span aria-hidden="true"> · </span>
+      <span data-zh lang="zh-CN">轨道档案</span>
+      <span data-en lang="en">Orbital Archive</span>
+      <span aria-hidden="true"> · </span>
+      <span>{year}</span>
+    </p>
+    <ul class="site-footer__links" aria-label="Contact links">
+      <li><a href={site.github}>GitHub</a></li>
+      <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+    </ul>
+  </div>
+</footer>

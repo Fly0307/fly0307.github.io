@@ -1,0 +1,52 @@
+---
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../data/site';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '../styles/layout.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  contentLanguage?: 'zh' | 'en';
+}
+
+const {
+  title = site.name,
+  description = 'UnlearnedMan 的个人主页与研究档案。',
+  contentLanguage,
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const contentLang = contentLanguage === 'zh' ? 'zh-CN' : contentLanguage;
+const favicon = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%2371ddff' stroke-width='4'/%3E%3Ccircle cx='45' cy='20' r='4' fill='%23f4b66a'/%3E%3C/svg%3E";
+---
+
+<!doctype html>
+<html lang="zh-CN" data-lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#05070d" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href={favicon} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      <span data-zh lang="zh-CN">跳至主要内容</span>
+      <span data-en lang="en">Skip to main content</span>
+    </a>
+    <SiteHeader />
+    <main id="main-content" lang={contentLang}>
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      import { initializeLanguage } from '../scripts/language';
+
+      initializeLanguage();
+    </script>
+  </body>
+</html>

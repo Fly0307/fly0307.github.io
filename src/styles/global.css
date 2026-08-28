@@ -1,0 +1,88 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--space-950);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(113, 221, 255, 0.1), transparent 28rem),
+    linear-gradient(160deg, var(--space-950), var(--space-900));
+  color: var(--star);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+body::selection {
+  background: var(--cyan);
+  color: var(--space-950);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--cyan);
+  text-decoration-color: color-mix(in srgb, var(--cyan) 55%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--star);
+  text-decoration-color: currentcolor;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 4px;
+}
+
+button {
+  font: inherit;
+}
+
+[data-lang='zh'] [data-en],
+[data-lang='en'] [data-zh] {
+  display: none;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-160%);
+  border: 1px solid var(--cyan);
+  border-radius: 0.5rem;
+  background: var(--space-800);
+  color: var(--star);
+  padding: 0.55rem 0.8rem;
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

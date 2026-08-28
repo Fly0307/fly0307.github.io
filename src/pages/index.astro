@@ -1,17 +1,13 @@
 ---
-const title = 'UnlearnedMan';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-      <img src="/img/hero-space.png" alt="白色火箭位于发射架旁的星空场景" />
-    </main>
-  </body>
-</html>
+
+<BaseLayout>
+  <section class="shell" aria-labelledby="temporary-heading">
+    <p data-zh lang="zh-CN">轨道档案</p>
+    <p data-en lang="en">Orbital Archive</p>
+    <h1 id="temporary-heading">UnlearnedMan</h1>
+    <p data-zh lang="zh-CN">个人研究档案正在准备进入轨道。</p>
+    <p data-en lang="en">A personal research archive is preparing to enter orbit.</p>
+  </section>
+</BaseLayout>

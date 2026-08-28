@@ -1,0 +1,31 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="site-mark" href="/" aria-label={`${site.name} home`}>
+      <span aria-hidden="true">◌</span>
+      <span>{site.name}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="/#projects">
+        <span data-zh lang="zh-CN">项目</span>
+        <span data-en lang="en">Projects</span>
+      </a>
+      <a href="/blog/">
+        <span data-zh lang="zh-CN">博客</span>
+        <span data-en lang="en">Blog</span>
+      </a>
+      <a href="/#about">
+        <span data-zh lang="zh-CN">关于</span>
+        <span data-en lang="en">About</span>
+      </a>
+    </nav>
+
+    <button class="language-toggle" type="button" data-language-toggle aria-label="切换至英文">
+      切换至英文
+    </button>
+  </div>
+</header>

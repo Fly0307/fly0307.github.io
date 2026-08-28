@@ -1,0 +1,148 @@
+.shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+.site-header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--space-950) 86%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.site-header__inner,
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-header__inner {
+  min-height: 4.5rem;
+}
+
+.site-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--star);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.site-mark > span:first-child {
+  color: var(--cyan);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.site-nav {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.site-nav a {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--cyan);
+}
+
+.language-toggle {
+  min-height: 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--star);
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.language-toggle:hover {
+  border-color: var(--cyan);
+  background: var(--cyan-soft);
+}
+
+main {
+  min-height: calc(100vh - 9rem);
+  padding-block: clamp(3rem, 8vw, 7rem);
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.site-footer__inner {
+  min-height: 5.5rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --shell: min(100% - 32px, 1180px);
+  }
+
+  .site-nav {
+    gap: 0.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --shell: min(100% - 28px, 1180px);
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    padding-block: 0.75rem;
+  }
+
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: flex-start;
+  }
+
+  .site-footer__inner {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: 1.25rem;
+  }
+
+  .site-footer__links {
+    justify-content: flex-start;
+  }
+}
