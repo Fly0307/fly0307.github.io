@@ -76,6 +76,10 @@ for (const text of [
   'lang="en"',
   '<main',
   'skip-link',
+  'id="language-toggle"',
+  'data-zh',
+  'data-en',
+  'aria-live="polite"',
 ]) {
   check(`index.html content`, () => mustContain(html, text));
 }
@@ -83,6 +87,8 @@ for (const text of [
 for (const [file, text] of [
   [resolve(root, 'css/site.css'), 'prefers-reduced-motion'],
   [resolve(root, 'js/site.js'), 'localStorage'],
+  [resolve(root, 'js/site.js'), 'export function resolveLanguage'],
+  [resolve(root, 'js/site.js'), 'export function setLanguage'],
 ]) {
   check(`${displayPath(file)} content`, () => mustContain(file, text));
 }
