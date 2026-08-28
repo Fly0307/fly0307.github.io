@@ -2,9 +2,11 @@
 import { getCollection } from 'astro:content';
 import Hero from '../components/Hero.astro';
 import LatestTransmissions from '../components/LatestTransmissions.astro';
+import OrbitalProgress from '../components/OrbitalProgress.astro';
 import ProfileSection from '../components/ProfileSection.astro';
 import ProjectMissions from '../components/ProjectMissions.astro';
 import ResearchOrbit from '../components/ResearchOrbit.astro';
+import Starfield from '../components/Starfield.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { selectHomepagePosts } from '../lib/posts';
 
@@ -12,9 +14,23 @@ const posts = selectHomepagePosts(await getCollection('blog'), 3);
 ---
 
 <BaseLayout description="UnlearnedMan 的个人主页 / Personal homepage of UnlearnedMan">
+  <Starfield />
+  <OrbitalProgress />
   <Hero />
   <ResearchOrbit />
   <ProjectMissions />
   <LatestTransmissions posts={posts} />
   <ProfileSection />
 </BaseLayout>
+
+<script>
+  import { initializeHeroParallax } from '../scripts/hero-parallax';
+  import { initializeOrbitalProgress } from '../scripts/orbital-progress';
+  import { initializeSectionReveal } from '../scripts/section-reveal';
+  import { initializeStarfield } from '../scripts/starfield';
+
+  initializeStarfield();
+  initializeSectionReveal();
+  initializeOrbitalProgress();
+  initializeHeroParallax();
+</script>

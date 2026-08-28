@@ -1,0 +1,30 @@
+---
+const sections = [
+  { id: 'launch', zh: '发射', en: 'Launch' },
+  { id: 'research', zh: '轨道', en: 'Orbit' },
+  { id: 'projects', zh: '任务', en: 'Payload' },
+  { id: 'transmissions', zh: '传输', en: 'Transmissions' },
+  { id: 'about', zh: '档案', en: 'Profile' },
+] as const;
+---
+
+<nav
+  class="orbital-progress"
+  data-orbit-progress
+  aria-label="页面轨道进度"
+  data-aria-label-zh="页面轨道进度"
+  data-aria-label-en="Page orbit progress"
+>
+  <span class="orbital-progress__track" aria-hidden="true"><span></span></span>
+  <ol>
+    {sections.map((section, index) => (
+      <li>
+        <a href={`#${section.id}`}>
+          <span class="orbital-progress__index" aria-hidden="true">0{index + 1}</span>
+          <span data-zh lang="zh-CN">{section.zh}</span>
+          <span data-en lang="en">{section.en}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>

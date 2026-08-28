@@ -1,0 +1,147 @@
+.starfield {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 25%, rgba(244, 247, 251, 0.62) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 8%, rgba(113, 221, 255, 0.52) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 48% 72%, rgba(244, 247, 251, 0.38) 0 1px, transparent 1.5px);
+  background-size: 173px 191px, 233px 257px, 307px 281px;
+}
+
+.starfield__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(1.4rem);
+}
+
+.motion-ready [data-reveal].is-visible {
+  animation: orbital-reveal 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes orbital-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(1.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero__visual[data-hero-parallax] img {
+  transform: translate3d(0, var(--hero-shift, 0px), 0) scale(var(--hero-scale, 1));
+  transform-origin: center;
+  transition: transform 100ms linear;
+}
+
+.orbital-progress {
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: max(1rem, calc((100vw - var(--shell)) / 2 - 6.25rem));
+  display: grid;
+  grid-template-columns: 0.75rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+}
+
+.orbital-progress__track {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 10rem;
+  background: var(--line);
+}
+
+.orbital-progress__track > span {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1px;
+  height: calc(var(--page-progress, 0) * 100%);
+  background: var(--cyan);
+  box-shadow: 0 0 0.75rem var(--cyan);
+}
+
+.orbital-progress ol {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orbital-progress a {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.orbital-progress a[aria-current='step'],
+.orbital-progress a:hover,
+.orbital-progress a:focus-visible {
+  color: var(--cyan);
+}
+
+.orbital-progress__index {
+  color: var(--amber);
+  font-size: 0.58rem;
+}
+
+@media (max-width: 760px) {
+  .orbital-progress {
+    top: 4.5rem;
+    right: 0;
+    left: 0;
+    display: block;
+    transform: none;
+  }
+
+  .orbital-progress__track {
+    width: 100%;
+    height: 2px;
+  }
+
+  .orbital-progress__track > span {
+    width: calc(var(--page-progress, 0) * 100%);
+    height: 2px;
+  }
+
+  .orbital-progress ol {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield__canvas {
+    display: none;
+  }
+
+  .motion-ready [data-reveal],
+  .motion-ready [data-reveal].is-visible,
+  .hero__visual[data-hero-parallax] img {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
