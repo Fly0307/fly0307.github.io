@@ -6,7 +6,7 @@ export const site = {
   projects: [
     {
       name: 'MobiAgent',
-      url: 'https://github.com/Fly0307/MobiAgent',
+      url: 'https://github.com/IPADS-SAI/MobiAgent',
       zh: '聚焦移动设备智能 GUI Agent。',
       en: 'Focuses on intelligent GUI agents for mobile devices.',
     },

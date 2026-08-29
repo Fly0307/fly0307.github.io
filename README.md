@@ -73,6 +73,6 @@ featured: true
 
 ## 维护边界
 
-公开身份信息仅维护为 UnlearnedMan、上海交通大学本科与硕士教育经历、`fly0307@sjtu.edu.cn`，以及已确认的 MobiAgent 和 Penglai 项目信息。请勿添加未经确认的姓名、院系、日期、职称、论文或贡献声明。
+公开身份信息仅维护为 UnlearnedMan、上海交通大学硕士在读、`fly0307@sjtu.edu.cn`，以及已确认的 MobiAgent 和 Penglai 项目信息。请勿添加未经确认的姓名、院系、日期、职称、论文或贡献声明。
 
 旧作者内容、旧主页链接和旧 Gitalk 配置（包括 `Dunky-Z/comment`）均不得重新引入。本站不包含评论系统、OAuth、分析或跟踪脚本。

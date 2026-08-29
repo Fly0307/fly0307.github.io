@@ -28,7 +28,7 @@ export function applyInterfaceLanguage(language: InterfaceLanguage): void {
 
   const toggle = document.querySelector<HTMLButtonElement>('[data-language-toggle]');
   if (toggle) {
-    toggle.textContent = language === 'zh' ? '切换至英文' : 'Switch to Chinese';
+    toggle.textContent = language === 'zh' ? 'Switch to English' : '切换至中文';
     toggle.ariaLabel = toggle.textContent;
   }
 

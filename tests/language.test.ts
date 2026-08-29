@@ -132,8 +132,8 @@ test('interface application updates labels, document language, and image alterna
     applyInterfaceLanguage('zh');
     assert.equal(environment.document.documentElement.dataset.lang, 'zh');
     assert.equal(environment.document.documentElement.lang, 'zh-CN');
-    assert.equal(environment.button.textContent, '切换至英文');
-    assert.equal(environment.button.ariaLabel, '切换至英文');
+    assert.equal(environment.button.textContent, 'Switch to English');
+    assert.equal(environment.button.ariaLabel, 'Switch to English');
     assert.equal(environment.image.alt, environment.image.dataset.altZh);
     assert.equal(environment.labelledElements[0].attributes.get('aria-label'), '主导航');
     assert.equal(environment.labelledElements[1].attributes.get('aria-label'), '联系方式');
@@ -141,7 +141,7 @@ test('interface application updates labels, document language, and image alterna
     applyInterfaceLanguage('en');
     assert.equal(environment.document.documentElement.dataset.lang, 'en');
     assert.equal(environment.document.documentElement.lang, 'en');
-    assert.equal(environment.button.textContent, 'Switch to Chinese');
+    assert.equal(environment.button.textContent, '切换至中文');
     assert.equal(environment.image.alt, environment.image.dataset.altEn);
     assert.equal(environment.labelledElements[0].attributes.get('aria-label'), 'Primary navigation');
     assert.equal(environment.labelledElements[1].attributes.get('aria-label'), 'Contact links');
