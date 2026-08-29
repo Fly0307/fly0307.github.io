@@ -37,6 +37,8 @@ test('generated homepage presents the confirmed Orbital Archive profile', async 
   assert.match(home, /Shanghai Jiao Tong University/);
   assert.match(home, /fly0307@sjtu\.edu\.cn/);
   assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/MobiAgent/);
+  assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/ClawMate/);
+  assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/MobiClaw/);
   assert.match(home, /https:\/\/penglai-enclave\.systems\//);
   assert.match(home, /id="launch"/);
   assert.match(home, /id="research"/);

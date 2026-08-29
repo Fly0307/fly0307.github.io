@@ -11,6 +11,18 @@ export const site = {
       en: 'Focuses on intelligent GUI agents for mobile devices.',
     },
     {
+      name: 'ClawMate',
+      url: 'https://github.com/IPADS-SAI/ClawMate',
+      zh: '面向 HarmonyOS 的主动式端侧智能体系统。',
+      en: 'A proactive on-device intelligent agent system for HarmonyOS.',
+    },
+    {
+      name: 'MobiClaw',
+      url: 'https://github.com/IPADS-SAI/MobiClaw',
+      zh: '面向移动设备操控的轻量级 OpenClaw 替代方案。',
+      en: 'A lightweight OpenClaw alternative with seamless mobile manipulation.',
+    },
+    {
       name: 'Penglai',
       url: 'https://penglai-enclave.systems/',
       zh: '面向 RISC-V 的开源、可扩展可信执行环境系统。',
