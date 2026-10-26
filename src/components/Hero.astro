@@ -1,4 +1,5 @@
 ---
+import { site } from '../data/site';
 ---
 
 <section id="launch" class="hero shell" aria-labelledby="launch-heading" data-reveal data-orbit-section>
@@ -6,13 +7,12 @@
     <p class="eyebrow">MISSION 01 · LAUNCH</p>
     <p class="hero__kicker" data-zh lang="zh-CN">个人研究档案</p>
     <p class="hero__kicker" data-en lang="en">Personal research archive</p>
-    <h1 id="launch-heading">UnlearnedMan</h1>
+    <h1 id="launch-heading">{site.name}</h1>
     <p class="hero__summary" data-zh lang="zh-CN">
-      上海交通大学硕士在读，关注智能体、可信执行环境与系统研究。
+      {site.hero.zh}
     </p>
     <p class="hero__summary" data-en lang="en">
-      Master's student at Shanghai Jiao Tong University, exploring intelligent agents,
-      trusted execution environments, and systems research.
+      {site.hero.en}
     </p>
     <div class="hero__actions">
       <a class="button-link" href="#projects">

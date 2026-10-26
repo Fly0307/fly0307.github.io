@@ -30,6 +30,10 @@ npm run test:static # 校验生成后的 HTML、RSS、站点地图和安全约�
 
 ## 发布博客文章
 
+也可以直接访问 [内容管理后台](https://fly0307.github.io/admin/)，通过表单写文章、预览、上传图片、保存草稿或发布，以及修改中英文个人介绍和项目。首次按 [后台使用说明](docs/admin.md) 配置 Cloudflare Workers 和 GitHub App 后，即可点击“使用 GitHub 登录”自动授权；仓库专用令牌仅作为备用登录方式。
+
+草稿只是不显示在网站上，源文件仍在公开 GitHub 仓库中，不能存放私密内容。
+
 所有文章位于 `src/content/blog/`。从 `src/content/blog/blog-template.md` 复制一份为新的 Markdown 文件，例如：
 
 ```text

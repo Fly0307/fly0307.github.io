@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 .superpowers/
+output/playwright/
+.playwright-cli/
+.wrangler/
+.dev.vars

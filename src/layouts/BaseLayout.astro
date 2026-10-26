@@ -17,7 +17,7 @@ interface Props {
 
 const {
   title = site.name,
-  description = 'UnlearnedMan 的个人主页与研究档案。',
+  description = `${site.name} 的个人主页与研究档案。`,
   contentLanguage,
 } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);

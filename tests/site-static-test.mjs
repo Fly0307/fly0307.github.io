@@ -1,8 +1,18 @@
 import assert from 'node:assert/strict';
 import { access, readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
+import { parse } from 'yaml';
 
 const root = new URL('../', import.meta.url);
+const siteContent = JSON.parse(await readFile(new URL('src/data/site-content.json', root), 'utf8'));
+const sourceEntries = await readdir(new URL('src/content/blog/', root), { recursive: true });
+const publishedSlugs = [];
+for (const entry of sourceEntries.filter(entry => entry.endsWith('.md'))) {
+  const source = await readFile(new URL(`src/content/blog/${entry}`, root), 'utf8');
+  const metadata = parse(source.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1]);
+  if (metadata.draft !== true) publishedSlugs.push(entry.slice(0, -3));
+}
+const decodeHtml = text => text.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&lt;', '<').replaceAll('&gt;', '>');
 const forbiddenRuntimeMarkers = [
   /Dominic/i,
   /Dunky-Z\/comment/i,
@@ -34,20 +44,18 @@ async function pathExists(path) {
 test('generated homepage presents the confirmed Orbital Archive profile', async () => {
   const home = await readFile(new URL('dist/index.html', root), 'utf8');
 
-  assert.match(home, /UnlearnedMan/);
-  assert.match(home, /Shanghai Jiao Tong University/);
-  assert.match(home, /fly0307@sjtu\.edu\.cn/);
-  assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/MobiAgent/);
-  assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/ClawMate/);
-  assert.match(home, /https:\/\/github\.com\/IPADS-SAI\/MobiClaw/);
-  assert.match(home, /https:\/\/penglai-enclave\.systems\//);
+  const decoded = decodeHtml(home);
+  for (const value of [siteContent.name, siteContent.email, siteContent.hero.zh, siteContent.hero.en, siteContent.about.zh, siteContent.about.en]) assert.ok(decoded.includes(value.trim()), value);
+  for (const project of siteContent.projects) {
+    assert.ok(decoded.includes(project.name.trim()));
+    assert.ok(decoded.includes(`href="${project.url}"`));
+  }
   assert.match(home, /id="launch"/);
   assert.match(home, /id="research"/);
   assert.match(home, /id="projects"/);
   assert.match(home, /id="transmissions"/);
   assert.match(home, /id="about"/);
-  assert.match(home, /href="\/blog\/shanshan\/"/);
-  assert.doesNotMatch(home, /data-empty-posts/);
+  assert.equal(home.includes('data-empty-posts'), publishedSlugs.length === 0);
   assert.doesNotMatch(home, /Dominic|Dunky-Z\/comment|Gitalk/i);
 });
 
@@ -59,21 +67,28 @@ test('generated blog surfaces only the static publishing contract', async () => 
   const blogEntries = await readdir(new URL('dist/blog/', root));
 
   assert.match(blog, /data-blog-archive/);
-  assert.match(blog, /href="\/blog\/shanshan\/"/);
-  assert.doesNotMatch(blog, /data-empty-posts/);
+  assert.equal(blog.includes('data-empty-posts'), publishedSlugs.length === 0);
   assert.match(blog, /name="language"/);
   assert.match(blog, /name="tag"/);
   assert.match(blog, /name="year"/);
   assert.match(rss, /<rss[\s>]/);
   assert.match(sitemap, /<sitemapindex[\s>]/);
   assert.match(robots, /Sitemap: https:\/\/fly0307\.github\.io\/sitemap-index\.xml/);
-  assert.ok(blogEntries.includes('shanshan'));
   assert.ok(!blogEntries.includes('blog-template'));
-  for (const slug of blogEntries.filter(entry => entry !== 'index.html')) {
+  for (const slug of publishedSlugs) {
     assert.ok(blog.includes(`/blog/${slug}/`));
     assert.ok(rss.includes(`/blog/${slug}/`));
   }
   assert.doesNotMatch(`${blog}\n${rss}\n${sitemap}`, /blog-template|文章标题 \/ Post title/);
+});
+
+test('admin entry is excluded from search indexing and includes the repository editor', async () => {
+  const admin = await readFile(new URL('dist/admin/index.html', root), 'utf8');
+  const sitemap = await readFile(new URL('dist/sitemap-0.xml', root), 'utf8');
+  assert.match(admin, /noindex, nofollow/);
+  for (const id of ['login-form', 'post-form', 'post-preview', 'image-file', 'settings-form', 'deployment-panel']) assert.ok(admin.includes(`id="${id}"`));
+  assert.doesNotMatch(sitemap, /\/admin\//);
+  assert.match(admin, /Content-Security-Policy/);
 });
 
 test('generated not-found page provides bilingual recovery links', async () => {

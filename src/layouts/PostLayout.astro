@@ -1,4 +1,5 @@
 ---
+import { site } from '../data/site';
 import type { MarkdownHeading } from 'astro';
 import PostMeta from '../components/PostMeta.astro';
 import TagList from '../components/TagList.astro';
@@ -19,7 +20,7 @@ const toc = headings.filter((heading) => heading.depth === 2 || heading.depth ==
 ---
 
 <BaseLayout
-  title={`${post.data.title} · UnlearnedMan`}
+  title={`${post.data.title} · ${site.name}`}
   description={post.data.description}
   contentLanguage={post.data.language}
 >

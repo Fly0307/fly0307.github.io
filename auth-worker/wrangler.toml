@@ -1,0 +1,12 @@
+name = "fly0307-admin-auth"
+main = "worker.ts"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+SITE_ORIGIN = "https://fly0307.github.io"
+GITHUB_CLIENT_ID = ""
+REPOSITORY_ID = "479644999"
+
+# Set GITHUB_CLIENT_SECRET and STATE_SECRET using `wrangler secret put`.
+# Do not put secrets in this file or in the static site.

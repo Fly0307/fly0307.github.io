@@ -8,12 +8,13 @@ import ProjectMissions from '../components/ProjectMissions.astro';
 import ResearchOrbit from '../components/ResearchOrbit.astro';
 import Starfield from '../components/Starfield.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
 import { selectHomepagePosts } from '../lib/posts';
 
 const posts = selectHomepagePosts(await getCollection('blog'), 3);
 ---
 
-<BaseLayout description="UnlearnedMan 的个人主页 / Personal homepage of UnlearnedMan">
+<BaseLayout description={`${site.name} 的个人主页 / Personal homepage of ${site.name}`}>
   <Starfield />
   <OrbitalProgress />
   <Hero />

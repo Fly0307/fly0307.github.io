@@ -1,4 +1,5 @@
 ---
+import { site } from '../../data/site';
 import { getCollection } from 'astro:content';
 import PostCard from '../../components/PostCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -11,8 +12,8 @@ const years = [...new Set(posts.map((post) => String(post.data.publishedAt.getUT
 ---
 
 <BaseLayout
-  title="Blog · UnlearnedMan"
-  description="UnlearnedMan 的研究笔记、技术记录与生活回忆。"
+  title={`Blog · ${site.name}`}
+  description={`${site.name} 的研究笔记、技术记录与生活回忆。`}
 >
   <section class="blog-archive shell" data-blog-archive aria-labelledby="blog-title">
     <header class="blog-archive__header">

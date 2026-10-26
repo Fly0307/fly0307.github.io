@@ -1,9 +1,10 @@
 ---
+import { site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="404 / SIGNAL LOST · UnlearnedMan"
+  title={`404 / SIGNAL LOST · ${site.name}`}
   description="The requested coordinate is unavailable."
 >
   <section class="profile-section shell" aria-labelledby="signal-lost-title">

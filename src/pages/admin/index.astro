@@ -1,0 +1,160 @@
+---
+import tokensUrl from '../../styles/tokens.css?url';
+import adminConfig from '../../data/admin-config.json';
+import '../../styles/admin.css';
+
+const authOrigin = adminConfig.authServiceUrl ? new URL(adminConfig.authServiceUrl).origin : '';
+if (authOrigin && !authOrigin.startsWith('https://')) throw new Error('Authorization service must use HTTPS.');
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="stylesheet" href={tokensUrl} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2305070d'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%2371ddff' stroke-width='4'/%3E%3C/svg%3E" />
+    <meta http-equiv="Content-Security-Policy" content={`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data: https:; connect-src 'self' https://api.github.com ${authOrigin}; object-src 'none'; base-uri 'none'; form-action 'none'`} />
+    <title>内容工作台 · Orbital Archive</title>
+  </head>
+  <body>
+    <a class="admin-skip" href="#admin-main">跳至编辑区</a>
+    <header class="studio-header">
+      <a href="/" class="studio-brand"><span aria-hidden="true">◌</span> ORBITAL ARCHIVE</a>
+      <span class="studio-header__label">CONTENT STUDIO / 内容工作台</span>
+      <a href="/" target="_blank" rel="noopener noreferrer">查看网站 ↗</a>
+    </header>
+    <main id="admin-main">
+      <noscript><p class="notice">内容管理需要启用 JavaScript。也可以前往 GitHub 编辑源文件。</p></noscript>
+      <section id="login-panel" class="login-panel" aria-labelledby="login-heading">
+        <p class="eyebrow">AUTHOR ACCESS / 作者入口</p>
+        <h1 id="login-heading">把想法写进轨道。</h1>
+        <p class="muted">写文章、存草稿，或更新你的项目和个人介绍。更改将保存到 GitHub，并自动发布到主页。</p>
+        <button id="github-login" type="button" class="primary github-login">使用 GitHub 登录 ↗</button>
+        <p id="oauth-setup" class="help" hidden>一键登录尚需一次性启用授权服务。<a href="https://github.com/Fly0307/fly0307.github.io/blob/main/docs/admin.md" target="_blank" rel="noopener noreferrer">查看配置步骤 ↗</a></p>
+        <p class="help">登录时将跳转到 GitHub。授权后自动返回，不需要手动复制令牌。</p>
+        <details class="token-fallback">
+          <summary>备用方式：使用仓库专用令牌</summary>
+          <form id="login-form">
+            <label for="github-token">GitHub 仓库专用令牌</label>
+            <input id="github-token" name="token" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required placeholder="github_pat_…" aria-describedby="token-help" />
+            <p id="token-help" class="help">仅支持 Fly0307。令牌只在此页面内存中保留，刷新或退出后清除。</p>
+            <button type="submit" class="primary">连接 GitHub</button>
+          </form>
+          <details class="login-guide">
+            <summary>第一次使用：如何获得登录令牌？</summary>
+            <ol>
+              <li>在 GitHub 打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">新建 Fine-grained token ↗</a>，填写名称并设置有效期。</li>
+              <li>Resource owner 选 <strong>Fly0307</strong>；Repository access 选 <strong>Only select repositories</strong>，只勾选 <strong>fly0307.github.io</strong>。</li>
+              <li>Repository permissions 中，将 <strong>Contents</strong> 设为 <strong>Read and write</strong>；Metadata 保持默认即可。</li>
+              <li>生成令牌，复制到上方输入框，然后连接。请勿把令牌写入文章或分享给他人。</li>
+            </ol>
+          </details>
+        </details>
+      </section>
+
+      <div id="workspace" class="workspace" hidden>
+        <aside class="studio-sidebar" aria-label="内容导航">
+          <p class="eyebrow">YOUR ARCHIVE</p>
+          <div class="session"><span id="session-user"></span><span class="branch">main</span></div>
+          <nav class="studio-tabs" aria-label="管理分类">
+            <button type="button" id="articles-tab" aria-pressed="true">文章档案</button>
+            <button type="button" id="settings-tab" aria-pressed="false">个人介绍与项目</button>
+          </nav>
+          <div id="article-navigation">
+            <button id="new-post" type="button" class="primary">＋ 新建文章</button>
+            <div class="list-heading"><span>文章列表</span><button id="refresh-posts" type="button" class="text-button">刷新</button></div>
+            <div id="post-list" class="post-list" aria-label="文章列表"></div>
+          </div>
+          <div class="sidebar-footer">
+            <a href="https://github.com/Fly0307/fly0307.github.io/actions" target="_blank" rel="noopener noreferrer">查看部署记录 ↗</a>
+            <button id="logout" type="button" class="text-button">退出登录</button>
+          </div>
+        </aside>
+
+        <div class="studio-content">
+          <section id="articles-panel" aria-labelledby="editor-heading">
+            <div class="page-heading">
+              <div><p class="eyebrow">TRANSMISSIONS / 文章</p><h1 id="editor-heading">新建文章</h1></div>
+              <span id="post-state" class="state-badge">尚未保存</span>
+            </div>
+            <p class="notice">草稿不会在网站展示，但源文件保存在公开 GitHub 仓库中。请勿写入私密信息。</p>
+            <form id="post-form">
+              <fieldset id="post-fields">
+                <div class="field-grid">
+                  <label>文章标题<input id="post-title" name="title" required maxlength="300" /></label>
+                  <label>文章地址<input id="post-slug" name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="my-first-post" aria-describedby="slug-help" /></label>
+                </div>
+                <p id="slug-help" class="help">新文章使用小写英文、数字和连字符；已有文章地址固定，避免旧链接失效。</p>
+                <label>摘要<textarea id="post-description" name="description" rows="2" required maxlength="2000"></textarea></label>
+                <div class="field-grid four-columns">
+                  <label>发布日期<input id="post-date" name="publishedAt" type="date" required /></label>
+                  <label>更新日期（可选）<input id="post-updated" name="updatedAt" type="date" /></label>
+                  <label>正文语言<select id="post-language" name="language"><option value="zh">中文</option><option value="en">English</option></select></label>
+                  <label>标签<input id="post-tags" name="tags" placeholder="Agent, Systems" /></label>
+                </div>
+                <label class="check-label"><input id="post-featured" name="featured" type="checkbox" />推荐到首页</label>
+                <div class="editor-toolbar">
+                  <span class="eyebrow">MARKDOWN</span>
+                  <div class="toolbar-actions">
+                    <button id="upload-image" type="button">上传图片</button>
+                    <input id="image-file" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" tabindex="-1" aria-label="选择文章图片" />
+                    <button id="download-post" type="button">下载备份</button>
+                  </div>
+                </div>
+                <div class="writing-grid">
+                  <label class="body-editor" for="post-body">正文<textarea id="post-body" name="body" rows="22" spellcheck="false" placeholder="## 写下你的第一段想法" required></textarea></label>
+                  <section class="preview-panel" aria-labelledby="preview-label">
+                    <div class="preview-label" id="preview-label">实时预览 <span>不会翻译原文</span></div>
+                    <div id="post-preview" class="prose-preview"><p class="muted">正文预览会显示在这里。</p></div>
+                  </section>
+                </div>
+                <p class="help">图片最大 5 MiB。图片上传后会插入正文，请保存文章以保留引用。预览支持 Markdown 与安全 HTML，最终排版以发布后的文章为准。</p>
+                <div class="save-actions">
+                  <button id="save-draft" type="button">保存草稿</button>
+                  <button id="publish-post" type="submit" class="primary">发布文章</button>
+                  <button id="reload-post" type="button" class="text-button" hidden>重新加载当前文章</button>
+                  <a id="view-post" href="/blog/" target="_blank" rel="noopener noreferrer" hidden>查看公开文章 ↗</a>
+                </div>
+              </fieldset>
+            </form>
+          </section>
+
+          <section id="settings-panel" aria-labelledby="settings-heading" hidden>
+            <div class="page-heading"><div><p class="eyebrow">PROFILE & PROJECTS</p><h1 id="settings-heading">个人介绍与项目</h1></div></div>
+            <p class="muted">用表单维护中英文内容。保存后，首页与相关位置会随自动部署一起更新。</p>
+            <form id="settings-form">
+              <fieldset id="settings-fields">
+                <section class="settings-card" aria-labelledby="identity-heading">
+                  <h2 id="identity-heading">个人信息</h2>
+                  <div class="field-grid"><label>昵称<input id="site-name" required maxlength="100" /></label><label>公开邮箱<input id="site-email" type="email" required /></label></div>
+                  <label>GitHub 主页<input id="site-github" type="url" required /></label>
+                  <div class="field-grid"><label>首页介绍 · 中文<textarea id="site-hero-zh" rows="3" required></textarea></label><label>首页介绍 · English<textarea id="site-hero-en" rows="3" required></textarea></label></div>
+                  <div class="field-grid"><label>关于 · 中文<textarea id="site-about-zh" rows="3" required></textarea></label><label>关于 · English<textarea id="site-about-en" rows="3" required></textarea></label></div>
+                </section>
+                <section class="settings-card" aria-labelledby="projects-heading">
+                  <div class="list-heading"><h2 id="projects-heading">项目展示</h2><button id="add-project" type="button">＋ 添加项目</button></div>
+                  <div id="projects-editor"></div>
+                </section>
+                <div class="save-actions"><button id="save-settings" type="submit" class="primary">保存个人介绍与项目</button><button id="reload-settings" type="button" class="text-button">重新加载资料</button></div>
+              </fieldset>
+            </form>
+          </section>
+          <section id="deployment-panel" class="deployment-panel" aria-label="保存与发布进度" hidden>
+            <p class="eyebrow">DELIVERY STATUS</p>
+            <p id="deployment-message"></p>
+            <div class="delivery-links"><a id="commit-link" target="_blank" rel="noopener noreferrer">查看保存记录 ↗</a><a id="workflow-link" href="https://github.com/Fly0307/fly0307.github.io/actions" target="_blank" rel="noopener noreferrer">查看部署 ↗</a><button id="check-deployment" type="button" class="text-button">刷新部署状态</button></div>
+          </section>
+        </div>
+      </div>
+      <div id="status" class="status-banner" role="status" aria-live="polite" hidden></div>
+      <div id="error" class="error-banner" role="alert" hidden></div>
+    </main>
+    <script>
+      import { initializeAdmin } from '../../admin/app';
+      initializeAdmin();
+    </script>
+  </body>
+</html>

@@ -2,13 +2,14 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import { getPublishedPosts } from '../lib/posts';
+import { site } from '../data/site';
 
 export const GET: APIRoute = async (context) => {
   const posts = getPublishedPosts(await getCollection('blog'));
 
   return rss({
-    title: 'UnlearnedMan · Transmissions',
-    description: 'Research notes and technical transmissions from UnlearnedMan.',
+    title: `${site.name} · Transmissions`,
+    description: `Research notes and technical transmissions from ${site.name}.`,
     site: context.site!,
     items: posts.map((post) => ({
       title: post.data.title,
