@@ -4,6 +4,22 @@
 
 ## GitHub 一键登录（推荐）
 
+生产授权服务已部署到 `https://fly0307-admin-auth.fly0307-archive.workers.dev`，前端已配置该地址。
+
+### 自动注册（无需复制密钥）
+
+由维护者生成一个有效期一小时的签名注册入口后，在浏览器打开：
+
+1. 点击“前往 GitHub 创建应用”，确认当前 GitHub 账号为 **Fly0307**。
+2. 在 GitHub 确认应用名称并创建。
+3. 系统自动接收应用配置，将 Client secret 用 AES-GCM 加密后保存在 Cloudflare KV，然后跳转到安装页。
+4. 选择 **Only select repositories → fly0307.github.io**，确认安装。
+5. 返回 `/admin/`，点击“使用 GitHub 登录”完成首次用户授权。
+
+注册入口只能在应用尚未配置时使用；成功配置后关闭。签名链接有效期一小时，不应公开分享。Client secret 和 App private key 不会返回到浏览器；不保存不需要的 App private key。加密配置位于专用 `APP_CONFIG` KV 绑定中，密钥为 Cloudflare Secret `STATE_SECRET`。**不要直接删除或轮换 STATE_SECRET**，否则已存储的应用配置将无法解密；维护时应先完成安全迁移。
+
+以下是需要手动注册或迁移服务时的替代步骤。自动注册成功后不必重复执行。
+
 首次需要配置一个 Cloudflare Worker 和 GitHub App，以后点击“使用 GitHub 登录”即可自动跳转授权并返回。无需手动寻找、复制或续填登录令牌。页面刷新或会话过期后再次点击登录，GitHub 会使用已有登录状态；首次授权、撤销授权后或 GitHub 要求验证时仍需确认。
 
 ### 1. 创建授权服务
@@ -15,7 +31,7 @@ npx wrangler@4 login
 npx wrangler@4 deploy --config auth-worker/wrangler.toml
 ```
 
-记录返回的服务地址，例如 `https://fly0307-admin-auth.<你的子域>.workers.dev`。在尚未配置应用密钥时服务返回 503，这是预期状态。前端仍由 GitHub Pages 托管，Worker 仅处理登录，不保存文章或长期令牌，不需要数据库。
+记录返回的服务地址，例如 `https://fly0307-admin-auth.<你的子域>.workers.dev`。在尚未配置应用密钥时服务返回 503，这是预期状态。前端仍由 GitHub Pages 托管，Worker 仅处理登录，不保存文章或用户访问令牌。自动注册使用专用 KV 保存加密后的应用配置。
 
 ### 2. 注册并安装 GitHub App
 

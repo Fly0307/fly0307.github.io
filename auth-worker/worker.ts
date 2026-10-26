@@ -1,10 +1,10 @@
-export interface AuthEnvironment {
-  SITE_ORIGIN: string;
-  GITHUB_CLIENT_ID: string;
-  GITHUB_CLIENT_SECRET: string;
-  STATE_SECRET: string;
-  REPOSITORY_ID: string;
-}
+import { handleSetup, loadCredentials } from './setup';
+import type { WorkerBindings } from './bindings';
+
+export type AuthEnvironment = Pick<WorkerBindings, 'SITE_ORIGIN' | 'GITHUB_CLIENT_ID' | 'REPOSITORY_ID' | 'STATE_SECRET'> & {
+  GITHUB_CLIENT_SECRET?: string;
+  APP_CONFIG?: { get(key: string): Promise<string | null>; put(key: string, value: string): Promise<void> };
+};
 
 interface Proof {
   state: string;
@@ -54,12 +54,16 @@ async function open(value: string, secret: string): Promise<Proof> {
   return data as Proof;
 }
 
-function configuration(env: AuthEnvironment) {
+async function configuration(env: AuthEnvironment) {
   const origin = new URL(env.SITE_ORIGIN);
   if (origin.protocol !== 'https:' || origin.origin !== env.SITE_ORIGIN
-    || !env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET || !env.STATE_SECRET || env.STATE_SECRET.length < 32
+    || !env.STATE_SECRET || env.STATE_SECRET.length < 32
     || !/^\d+$/.test(env.REPOSITORY_ID)) throw new Error('missing configuration');
-  return origin.origin;
+  const stored = (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) ? await loadCredentials(env) : null;
+  const clientId = stored?.clientId || env.GITHUB_CLIENT_ID;
+  const clientSecret = stored?.clientSecret || env.GITHUB_CLIENT_SECRET;
+  if (!clientId || !clientSecret) throw new Error('missing app configuration');
+  return { origin: origin.origin, clientId, clientSecret };
 }
 
 function redirect(url: string, cookie: string) {
@@ -71,10 +75,13 @@ function redirect(url: string, cookie: string) {
 export function createAuthWorker(upstream: typeof fetch = fetch) {
   return {
     async fetch(request: Request, env: AuthEnvironment): Promise<Response> {
-      let origin: string;
-      try { origin = configuration(env); }
-      catch { return json({ error: 'Authorization service is not configured.' }, 503); }
       const url = new URL(request.url);
+      if (url.pathname.startsWith('/setup/')) return handleSetup(request, env, upstream, { seal, open });
+      let origin: string;
+      let clientId: string;
+      let clientSecret: string;
+      try { ({ origin, clientId, clientSecret } = await configuration(env)); }
+      catch { return json({ error: 'Authorization service is not configured.' }, 503); }
       const callback = `${url.origin}/callback`;
       const cors = { 'Access-Control-Allow-Origin': origin, Vary: 'Origin' };
       if (url.pathname === '/exchange' && request.method === 'OPTIONS') {
@@ -92,7 +99,7 @@ export function createAuthWorker(upstream: typeof fetch = fetch) {
           const oauthState = nonce();
           const proof = await seal({ state, challenge, nonce: oauthState, expires: Date.now() + 600000 }, env.STATE_SECRET);
           const github = new URL('https://github.com/login/oauth/authorize');
-          github.search = new URLSearchParams({ client_id: env.GITHUB_CLIENT_ID, redirect_uri: callback, state: oauthState, code_challenge: challenge, code_challenge_method: 'S256', login: 'Fly0307', allow_signup: 'false' }).toString();
+          github.search = new URLSearchParams({ client_id: clientId, redirect_uri: callback, state: oauthState, code_challenge: challenge, code_challenge_method: 'S256', login: 'Fly0307', allow_signup: 'false' }).toString();
           // A GitHub App takes its permissions from its installation; request no broad OAuth scopes.
           return redirect(github.href, `${cookieName}=${proof}; Path=/; Max-Age=600; Secure; HttpOnly; SameSite=Lax`);
         }
@@ -123,7 +130,7 @@ export function createAuthWorker(upstream: typeof fetch = fetch) {
           if (proof.state !== data.state || proof.codeHash !== await digest(data.code) || proof.challenge !== await digest(data.verifier)) throw new Error('PKCE mismatch');
           const tokenResponse = await upstream('https://github.com/login/oauth/access_token', {
             method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(15000),
-            body: JSON.stringify({ client_id: env.GITHUB_CLIENT_ID, client_secret: env.GITHUB_CLIENT_SECRET, code: data.code, code_verifier: data.verifier, redirect_uri: callback, repository_id: env.REPOSITORY_ID }),
+            body: JSON.stringify({ client_id: clientId, client_secret: clientSecret, code: data.code, code_verifier: data.verifier, redirect_uri: callback, repository_id: env.REPOSITORY_ID }),
           });
           if (!tokenResponse.ok) throw new Error('token exchange failed');
           const token: unknown = await tokenResponse.json();

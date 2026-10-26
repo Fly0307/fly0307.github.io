@@ -1,7 +1,27 @@
 name = "fly0307-admin-auth"
-main = "worker.ts"
+main = "entry.ts"
 compatibility_date = "2026-10-26"
 workers_dev = true
+account_id = "4d1c7399ef34fb8817c8f3e544400eae"
+
+[observability]
+enabled = true
+redact_query_string = true
+
+[observability.logs]
+enabled = true
+invocation_logs = false
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 0.01
+
+[[kv_namespaces]]
+binding = "APP_CONFIG"
+id = "b5450e33f9fc4aa69dd04e29713bdb94"
+
+[secrets]
+required = ["STATE_SECRET"]
 
 [vars]
 SITE_ORIGIN = "https://fly0307.github.io"
