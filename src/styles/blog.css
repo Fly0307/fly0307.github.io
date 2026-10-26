@@ -271,3 +271,62 @@
     text-align: left;
   }
 }
+
+/* Photo groups keep the same stories and order as the Shanshan album. */
+.memory-opening {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.prose .memory-date, .prose .memory-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.memory-album-link {
+  display: inline-block;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid var(--amber);
+  border-radius: 0.4rem;
+  color: var(--amber);
+  text-decoration: none;
+}
+.memory-album-link:hover, .memory-album-link:focus-visible {
+  color: var(--star);
+  border-color: currentColor;
+}
+.memory-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0 2.5rem;
+}
+.memory-gallery--single { grid-template-columns: 1fr; }
+.memory-gallery a {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  padding: 0.45rem;
+  background: var(--panel);
+}
+.memory-gallery img {
+  display: block;
+  width: 100%;
+  height: 18rem;
+  object-fit: contain;
+}
+.memory-gallery--single img { height: auto; max-height: 34rem; }
+.memory-afterword {
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+  border-block: 1px solid var(--line);
+  color: var(--muted);
+}
+.memory-afterword summary { cursor: pointer; }
+@media (max-width: 480px) {
+  .memory-opening { padding: 1rem; }
+  .memory-gallery { gap: 0.5rem; }
+  .memory-gallery img { height: 12rem; }
+  .memory-gallery--single img { height: auto; max-height: 28rem; }
+}

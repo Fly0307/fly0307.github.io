@@ -15,7 +15,8 @@ async function readTree(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const contents = await Promise.all(entries.map(async (entry) => {
     const path = new URL(`${entry.name}${entry.isDirectory() ? '/' : ''}`, directory);
-    return entry.isDirectory() ? readTree(path) : readFile(path, 'utf8');
+    if (entry.isDirectory()) return readTree(path);
+    return /\.(?:html|css|js|mjs|ts|astro|md|json|xml|txt)$/.test(entry.name) ? readFile(path, 'utf8') : '';
   }));
 
   return contents.flat(Infinity).join('\n');
@@ -45,7 +46,8 @@ test('generated homepage presents the confirmed Orbital Archive profile', async 
   assert.match(home, /id="projects"/);
   assert.match(home, /id="transmissions"/);
   assert.match(home, /id="about"/);
-  assert.match(home, /data-empty-posts/);
+  assert.match(home, /href="\/blog\/shanshan\/"/);
+  assert.doesNotMatch(home, /data-empty-posts/);
   assert.doesNotMatch(home, /Dominic|Dunky-Z\/comment|Gitalk/i);
 });
 
@@ -57,14 +59,20 @@ test('generated blog surfaces only the static publishing contract', async () => 
   const blogEntries = await readdir(new URL('dist/blog/', root));
 
   assert.match(blog, /data-blog-archive/);
-  assert.match(blog, /data-empty-posts/);
+  assert.match(blog, /href="\/blog\/shanshan\/"/);
+  assert.doesNotMatch(blog, /data-empty-posts/);
   assert.match(blog, /name="language"/);
   assert.match(blog, /name="tag"/);
   assert.match(blog, /name="year"/);
   assert.match(rss, /<rss[\s>]/);
   assert.match(sitemap, /<sitemapindex[\s>]/);
   assert.match(robots, /Sitemap: https:\/\/fly0307\.github\.io\/sitemap-index\.xml/);
-  assert.deepEqual(blogEntries.sort(), ['index.html']);
+  assert.ok(blogEntries.includes('shanshan'));
+  assert.ok(!blogEntries.includes('blog-template'));
+  for (const slug of blogEntries.filter(entry => entry !== 'index.html')) {
+    assert.ok(blog.includes(`/blog/${slug}/`));
+    assert.ok(rss.includes(`/blog/${slug}/`));
+  }
   assert.doesNotMatch(`${blog}\n${rss}\n${sitemap}`, /blog-template|文章标题 \/ Post title/);
 });
 
