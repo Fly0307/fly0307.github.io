@@ -3,9 +3,12 @@ title: "山山 · 我们在一起的日子"
 description: "留给山山的回忆：六个章节，九十四张照片，许多很小的日常。"
 publishedAt: 2026-10-26
 language: zh
-tags: ["山山", "生活", "回忆"]
+tags:
+  - 山山
+  - 生活
+  - 回忆
 draft: false
-featured: true
+featured: false
 ---
 
 <div class="memory-opening">
